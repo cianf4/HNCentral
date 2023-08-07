@@ -42,9 +42,9 @@ export class NewsPage implements OnInit {
       this.newsService.getArticle(id).subscribe(article => {
         article.readableDate = this.newsService.convertUnixToDate(article.time);
         this.articles.push(article);
+        console.log(article);
       });
     });
-    console.log(this.articles);
   }
 
 }

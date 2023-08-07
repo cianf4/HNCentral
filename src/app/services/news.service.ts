@@ -22,7 +22,7 @@ export class NewsService {
 
   constructor(private http: HttpClient) { }
 
-  getTopStories(limit: number = 20): Observable<number[]> {
+  getTopStories(limit: number = 100): Observable<number[]> {
     return this.http.get<number[]>(`${environment.apiUrl}/topstories.json?orderBy="$key"&limitToFirst=${limit}`);
   }
 
@@ -32,6 +32,12 @@ export class NewsService {
 
   convertUnixToDate(unixTimestamp: number): string {
     const date = new Date(unixTimestamp * 1000);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString([], {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   }
 }

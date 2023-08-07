@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <ion-card *ngIf="article">
     <ion-card-header>
-      <ion-card-subtitle>Inviato da {{ article.by }} {{ article.time }}</ion-card-subtitle>
+      <ion-card-subtitle>Inviato da {{ article.by }} il git {{ article.readableDate }}</ion-card-subtitle>
       <ion-card-title>{{ article.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>

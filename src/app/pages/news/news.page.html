@@ -9,7 +9,7 @@
     <ion-item button *ngFor="let article of articles" [routerLink]="[article.id]">
       <ion-label>
         <ion-text>{{ article.title }}</ion-text>
-        <ion-text color="medium"><p>Da {{ article.by }} {{ article.readableDate }}</p></ion-text>
+        <ion-text color="medium"><p>Da {{ article.by }} • {{ article.readableDate }}</p></ion-text>
         <ion-text slot="end" *ngIf="article.descendants" class="comments">{{ article.descendants }} commenti</ion-text>
       </ion-label>
 

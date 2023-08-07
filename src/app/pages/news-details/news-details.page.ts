@@ -17,10 +17,11 @@ export class NewsDetailsPage implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.newsService.getArticle(id).subscribe((res) => {
-      console.log(res);
-      this.article = res;
-    })
+    this.newsService.getArticle(id).subscribe((article) => {
+      article.readableDate = this.newsService.convertUnixToDate(article.time);
+      this.article = article;
+      console.log(article);
+    });
   }
 
   openArticle() {
