@@ -1,13 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>news-details</ion-title>
+    <ion-title>{{ article?.title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/news"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">news-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card *ngIf="article">
+    <ion-card-header>
+      <ion-card-subtitle>Inviato da {{ article.by }} {{ article.time }}</ion-card-subtitle>
+      <ion-card-title>{{ article.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="full" (click)="openArticle()">
+        Leggi l'articolo
+      </ion-button>
+      <ion-text color="secondary" *ngIf="article.descendants" color="medium">
+        {{ article.descendants }} commenti
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

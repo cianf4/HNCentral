@@ -6,10 +6,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item button *ngFor="let article of articles">
+    <ion-item button *ngFor="let article of articles" [routerLink]="[article.id]">
       <ion-label>
         <ion-text>{{ article.title }}</ion-text>
-        <ion-card-subtitle><p>By {{ article.by }}</p></ion-card-subtitle>
+        <ion-text color="medium"><p>Da {{ article.by }} {{ article.readableDate }}</p></ion-text>
+        <ion-text slot="end" *ngIf="article.descendants" class="comments">{{ article.descendants }} commenti</ion-text>
       </ion-label>
 
       <ion-badge slot="end">{{ article.score }}</ion-badge>

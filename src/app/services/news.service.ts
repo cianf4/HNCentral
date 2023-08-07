@@ -26,8 +26,7 @@ export class NewsService {
     return this.http.get<number[]>(`${environment.apiUrl}/topstories.json?orderBy="$key"&limitToFirst=${limit}`);
   }
 
-  getArticle(articleId: number): Observable<any> {
-    const url = `${environment.apiUrl}/item/${articleId}.json`;
-    return this.http.get(url);
+  getArticle(articleId: number|string|null): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/item/${articleId}.json`);
   }
 }
