@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>HackerNews Clone</ion-title>
+    <ion-title>Top News</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,9 +8,11 @@
   <ion-list>
     <ion-item button *ngFor="let article of articles">
       <ion-label>
-        <h2>{{ article.title }}</h2>
-        <p>By {{ article.by }}</p>
+        <ion-text>{{ article.title }}</ion-text>
+        <ion-card-subtitle><p>By {{ article.by }}</p></ion-card-subtitle>
       </ion-label>
+
+      <ion-badge slot="end">{{ article.score }}</ion-badge>
     </ion-item>
   </ion-list>
 </ion-content>
