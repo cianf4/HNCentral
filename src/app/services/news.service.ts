@@ -22,11 +22,12 @@ export class NewsService {
 
   constructor(private http: HttpClient) { }
 
-  getTopNews(limit: number = 500): Observable<number[]> {
+  getTopStories(limit: number = 20): Observable<number[]> {
     return this.http.get<number[]>(`${environment.apiUrl}/topstories.json?orderBy="$key"&limitToFirst=${limit}`);
   }
 
-  getNewsDetails(id: number): Observable<ApiResult>{
-    return this.http.get<ApiResult>(`${environment.apiUrl}/item/${id}.json`);
+  getArticle(articleId: number): Observable<any> {
+    const url = `${environment.apiUrl}/item/${articleId}.json`;
+    return this.http.get(url);
   }
 }

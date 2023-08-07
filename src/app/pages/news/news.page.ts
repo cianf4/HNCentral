@@ -8,26 +8,42 @@ import { LoadingController } from "@ionic/angular";
   styleUrls: ['./news.page.scss'],
 })
 export class NewsPage implements OnInit {
-  news: number[] = [];
+  articles: any[] = [];
 
-  constructor(private newsService: NewsService, private loadingController: LoadingController) { }
+  constructor(
+    private newsService: NewsService,
+    private loadingController: LoadingController
+  ) { }
 
   ngOnInit() {
-    this.loadNews();
+    this.loadTopStories();
   }
 
-  async loadNews() {
+  async loadTopStories() {
     const loading = await this.loadingController.create({
       //message: 'Attendi..',
-      spinner: 'circular'
+      spinner: 'circular',
     });
     await loading.present();
 
-    this.newsService.getTopNews().subscribe((res: number[]) => {
+    this.newsService.getTopStories().subscribe(ids => {
       loading.dismiss();
-      this.news = res;
-      console.log(res)
-    })
+      // Assuming you want to show only the first 10 articles for now
+      //const firstTenIds = ids.slice(0, 10);
+      //this.loadArticles(firstTenIds);
+      this.loadArticles(ids);
+      console.log(ids);
+    });
+  }
+
+  loadArticles(ids: number[]) {
+    // Loop through the article IDs and fetch each article
+    ids.forEach(id => {
+      this.newsService.getArticle(id).subscribe(article => {
+        this.articles.push(article);
+      });
+    });
+    console.log(this.articles);
   }
 
 }

@@ -6,8 +6,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item button *ngFor="let item of news">
-      {{ item }}
+    <ion-item button *ngFor="let article of articles">
+      <ion-label>
+        <h2>{{ article.title }}</h2>
+        <p>By {{ article.by }}</p>
+      </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
