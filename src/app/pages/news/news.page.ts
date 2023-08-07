@@ -40,17 +40,11 @@ export class NewsPage implements OnInit {
     // Loop through the article IDs and fetch each article
     ids.forEach(id => {
       this.newsService.getArticle(id).subscribe(article => {
-        article.readableDate = this.convertUnixToDate(article.time);
+        article.readableDate = this.newsService.convertUnixToDate(article.time);
         this.articles.push(article);
       });
     });
     console.log(this.articles);
   }
-
-  convertUnixToDate(unixTimestamp: number): string {
-    const date = new Date(unixTimestamp * 1000);
-    return date.toLocaleString([], { hour: '2-digit', minute: '2-digit' }); //dd-mm-yyyy HH:MM
-  }
-
 
 }

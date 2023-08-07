@@ -29,4 +29,9 @@ export class NewsService {
   getArticle(articleId: number|string|null): Observable<any> {
     return this.http.get(`${environment.apiUrl}/item/${articleId}.json`);
   }
+
+  convertUnixToDate(unixTimestamp: number): string {
+    const date = new Date(unixTimestamp * 1000);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
 }
