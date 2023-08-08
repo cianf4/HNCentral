@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { NewsService } from "../../services/news.service";
-import { CommentsService } from "../../services/comments.service";
+import { DateUtilityService } from "../../services/date-utility.service";
 
 @Component({
   selector: 'app-news-details',
@@ -15,6 +15,7 @@ export class NewsDetailsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService,
+    private dateService: DateUtilityService
   ) { }
 
   ngOnInit() {
@@ -24,7 +25,6 @@ export class NewsDetailsPage implements OnInit {
   loadArticle() {
     const id = this.route.snapshot.paramMap.get('id');
     this.newsService.getArticle(id).subscribe((article) => {
-      article.readableDate = this.newsService.convertUnixToDate(article.time);
       this.article = article;
       console.log(article);
     });
