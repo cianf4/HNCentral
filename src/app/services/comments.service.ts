@@ -16,11 +16,11 @@ export interface ApiResult {
 @Injectable({
   providedIn: 'root'
 })
-export class CommentServiceService {
+export class CommentsService {
 
   constructor(private http: HttpClient) { }
 
-  getCommentIds(articleId: number): Observable<number[]> {
+  getCommentIds(articleId: number | string | null): Observable<number[]> {
     return this.http.get<number[]>(`${environment.apiUrl}/item/${articleId}.json`).pipe(
       map((data: any) => data.kids)
     );

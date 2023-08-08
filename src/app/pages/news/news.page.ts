@@ -30,9 +30,6 @@ export class NewsPage implements OnInit {
 
     this.newsService.getTopStories().subscribe(ids => {
       loading.dismiss();
-      // Assuming you want to show only the first 10 articles for now
-      //const firstTenIds = ids.slice(0, 10);
-      //this.loadArticles(firstTenIds);
       let pagedIds = this.newsService.fromArrayToKeyValue(ids);
       this.loadPagedArticles(pagedIds);
       console.log(ids);

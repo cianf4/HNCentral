@@ -1,3 +1,10 @@
-<p>
-  comment-section works!
-</p>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      Commenti:
+    </ion-card-title>
+  </ion-card-header>
+  <ion-item *ngFor="let commentId of commentIds">
+    {{ commentId }}
+  </ion-item>
+</ion-card>
