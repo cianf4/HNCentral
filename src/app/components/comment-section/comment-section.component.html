@@ -13,9 +13,9 @@
       </ion-card-header>
       <ion-card-content>
         <ion-text class="comment-content" [innerHTML]="comment.text"></ion-text>
-        <ion-item>
-          {{ comment.descendants }}
-        </ion-item>
+        <ion-text color="secondary">
+          <p>{{ comment.repliesCount }} risposte</p>
+        </ion-text>
       </ion-card-content>
     </ion-card>
   </ion-list>

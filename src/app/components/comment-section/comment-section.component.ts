@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import {CommentsService, CommentApiResult } from "../../services/comments.service";
+import { CommentsService, CommentApiResult } from "../../services/comments.service";
 import { NewsService } from "../../services/news.service";
 
 
@@ -16,7 +16,6 @@ export class CommentSectionComponent  implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private newsService: NewsService,
     private commentsService: CommentsService
   ) { }
 
@@ -37,6 +36,10 @@ export class CommentSectionComponent  implements OnInit {
       });
     });
   }
+
+    getCommentReplies(ids: number[]): CommentApiResult[] {
+        return this.comments.filter((comment) => ids.includes(comment.id));
+    }
 
     /**
      loadCommentIds() {

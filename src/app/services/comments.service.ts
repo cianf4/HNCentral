@@ -17,6 +17,7 @@ export interface CommentApiResult {
 
 export interface ReadableCommentApiResult extends CommentApiResult {
   readableDate: string;
+  repliesCount: number;
 }
 
 @Injectable({
@@ -36,9 +37,11 @@ export class CommentsService {
   getComment(commentId: number): Observable<ReadableCommentApiResult> {
     return this.http.get<CommentApiResult>(`${environment.apiUrl}/item/${commentId}.json`).pipe(
       map((comment: CommentApiResult) => {
+        const repliesCount = Array.isArray(comment.kids) ? comment.kids.length : 0;
         return {
           ...comment,
-          readableDate: this.dateService.convertUnixToDate(comment.time)
+          readableDate: this.dateService.convertUnixToDate(comment.time),
+          repliesCount: repliesCount
         };
       })
     );
