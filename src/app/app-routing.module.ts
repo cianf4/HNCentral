@@ -12,9 +12,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/news/news.module').then( m => m.NewsPageModule)
   },
   {
-    path: 'news/:id',
+    path: 'news/:articleId',
     loadChildren: () => import('./pages/news-details/news-details.module').then( m => m.NewsDetailsPageModule)
   },
+  {
+    path: 'news/:articleId/:commentId',
+    loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
+  }
 ];
 
 @NgModule({

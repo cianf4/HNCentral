@@ -24,7 +24,7 @@ export class CommentSectionComponent  implements OnInit {
   }
 
   loadComments() {
-    const articleId = this.route.snapshot.paramMap.get('id');
+    const articleId = this.route.snapshot.paramMap.get('articleId');
     // Carica gli ID dei commenti
     this.commentsService.getCommentIds(articleId).subscribe((commentIds) => {
       this.commentIds = commentIds;
@@ -39,6 +39,10 @@ export class CommentSectionComponent  implements OnInit {
 
     getCommentReplies(ids: number[]): CommentApiResult[] {
         return this.comments.filter((comment) => ids.includes(comment.id));
+    }
+
+    goToComment(commentId: number) {
+
     }
 
     /**

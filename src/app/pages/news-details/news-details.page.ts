@@ -23,7 +23,7 @@ export class NewsDetailsPage implements OnInit {
   }
 
   loadArticle() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('articleId');
     this.newsService.getArticle(id).subscribe((article) => {
       this.article = article;
       console.log(article);
