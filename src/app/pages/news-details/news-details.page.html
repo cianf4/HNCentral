@@ -19,7 +19,7 @@
           Leggi l'articolo
         </ion-button>
       <ion-item>
-        <ion-text color="secondary" *ngIf="article.descendants" color="medium">
+        <ion-text color="secondary" color="medium">
           {{ article.descendants }} commenti
         </ion-text>
         <ion-badge slot="end">
@@ -27,6 +27,18 @@
         </ion-badge>
       </ion-item>
     </ion-card-content>
+  </ion-card>
+
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Commenti:
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item *ngFor="let comment of article?.kids">
+      {{ comment }}
+    </ion-item>
   </ion-card>
 
 </ion-content>
