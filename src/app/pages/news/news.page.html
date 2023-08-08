@@ -13,7 +13,9 @@
         <ion-text slot="end" *ngIf="article.descendants" class="comments">{{ article.descendants }} commenti</ion-text>
       </ion-label>
 
-      <ion-badge slot="end">{{ article.score }}</ion-badge>
+      <ion-badge slot="end">
+        <ion-icon name="star"></ion-icon>{{ article.score }}
+      </ion-badge>
     </ion-item>
   </ion-list>
 

@@ -1,9 +1,15 @@
 ion-badge {
   --background: #FFB738;
   --color: black;
+  border-radius: 6px;
 }
 
 .comments {
   font-size: 0.75em;
   color: #FFB738;
+}
+
+ion-text {
+  text-overflow: initial;
+  white-space: normal;
 }
