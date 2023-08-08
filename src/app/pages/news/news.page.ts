@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from "../../services/news.service";
-import { LoadingController } from "@ionic/angular";
+import { InfiniteScrollCustomEvent, LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-news',
@@ -9,6 +9,8 @@ import { LoadingController } from "@ionic/angular";
 })
 export class NewsPage implements OnInit {
   articles: any[] = [];
+  currentPage = 1;
+  totalPages = 25;  //20 articoli per pagina
 
   constructor(
     private newsService: NewsService,
@@ -19,7 +21,7 @@ export class NewsPage implements OnInit {
     this.loadTopStories();
   }
 
-  async loadTopStories() {
+  async loadTopStories(event?: InfiniteScrollCustomEvent) {
     const loading = await this.loadingController.create({
       //message: 'Attendi..',
       spinner: 'circular',
@@ -31,20 +33,65 @@ export class NewsPage implements OnInit {
       // Assuming you want to show only the first 10 articles for now
       //const firstTenIds = ids.slice(0, 10);
       //this.loadArticles(firstTenIds);
-      this.loadArticles(ids);
+      let pagedIds = this.newsService.fromArrayToKeyValue(ids);
+      this.loadPagedArticles(pagedIds);
       console.log(ids);
+      console.log(pagedIds)
+      //console.log(this.newsService.fromArrayToKeyValue(ids));
+
+      event?.target.complete();
+      if (event) {
+        event.target.disabled = this.totalPages === this.currentPage;
+      }
     });
   }
 
-  loadArticles(ids: number[]) {
-    // Loop through the article IDs and fetch each article
-    ids.forEach(id => {
-      this.newsService.getArticle(id).subscribe(article => {
-        article.readableDate = this.newsService.convertUnixToDate(article.time);
-        this.articles.push(article);
-        console.log(article);
+  loadPagedArticles(pagedIds: { [p: number]: number[] }) {
+    const currentPage = this.currentPage;
+
+    const ids = pagedIds[currentPage];
+    if (ids) {
+      ids.forEach(id => {
+        this.newsService.getArticle(id).subscribe(article => {
+          article.readableDate = this.newsService.convertUnixToDate(article.time);
+          this.articles.push(article);
+          console.log(article);
+        });
       });
-    });
+    }
   }
 
+  loadMore(event: any) {
+    this.currentPage++;
+    this.loadTopStories(event);
+  }
+
+  /**
+   loadArticles(ids: number[]) {
+   // Loop through the article IDs and fetch each article
+   ids.forEach(id => {
+   this.newsService.getArticle(id).subscribe(article => {
+   article.readableDate = this.newsService.convertUnixToDate(article.time);
+   this.articles.push(article);
+   console.log(article);
+   });
+   });
+   }
+   **/
+
+  /**
+  loadPagedArticles(pagedIds: { [p: number]: number[] }) {
+    // Loop through the pages in pagedIds
+    for (const page in pagedIds) {
+      const ids = pagedIds[page];
+      ids.forEach(id => {
+        this.newsService.getArticle(id).subscribe(article => {
+          article.readableDate = this.newsService.convertUnixToDate(article.time);
+          this.articles.push(article);
+          console.log(article);
+        });
+      });
+    }
+  }
+  **/
 }

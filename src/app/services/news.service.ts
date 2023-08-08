@@ -22,7 +22,7 @@ export class NewsService {
 
   constructor(private http: HttpClient) { }
 
-  getTopStories(limit: number = 100): Observable<number[]> {
+  getTopStories(limit: number = 500): Observable<number[]> {
     return this.http.get<number[]>(`${environment.apiUrl}/topstories.json?orderBy="$key"&limitToFirst=${limit}`);
   }
 
@@ -40,4 +40,18 @@ export class NewsService {
       minute: '2-digit'
     });
   }
+
+  fromArrayToKeyValue(array: number[]): {[p: number]: number[]} {
+    const keyValueMap: { [key: number]: number[] } = {};
+
+    for (let i = 0; i < array.length; i++) {
+      const key = Math.floor(i / 20) + 1; // Calcola la chiave (da 1 a 25 (20 articoli per pagina))
+      if (!keyValueMap[key]) {
+        keyValueMap[key] = [];
+      }
+      keyValueMap[key].push(array[i]);
+    }
+    return keyValueMap;
+  }
+
 }
