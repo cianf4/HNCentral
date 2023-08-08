@@ -4,7 +4,18 @@
       Commenti:
     </ion-card-title>
   </ion-card-header>
-  <ion-item *ngFor="let commentId of commentIds">
-    {{ commentId }}
-  </ion-item>
+  <ion-list>
+    <ion-card *ngFor="let comment of comments" color="light">
+      <ion-card-header>
+        <ion-label color="medium">
+          Scritto da<ion-text color="secondary" class="by"> {{ comment.by }} </ion-text> il {{ comment.readableDate }}
+        </ion-label>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-text class="comment-content" [innerHTML]="comment.text"></ion-text>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-card>
+
+

@@ -27,7 +27,7 @@ export class CommentsService {
   }
 
   getComment(commentId: number): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/item/${commentId}.json`);
+    return this.http.get<any>(`${environment.apiUrl}/item/${commentId}.json`);
   }
 
 }
