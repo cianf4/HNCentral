@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from "../../services/news.service";
+import { NewsApiResult, NewsService } from "../../services/news.service";
 import { InfiniteScrollCustomEvent, LoadingController } from "@ionic/angular";
+
 
 @Component({
   selector: 'app-news',
@@ -50,7 +51,6 @@ export class NewsPage implements OnInit {
     if (ids) {
       ids.forEach(id => {
         this.newsService.getArticle(id).subscribe(article => {
-          article.readableDate = this.newsService.convertUnixToDate(article.time);
           this.articles.push(article);
           console.log(article);
         });
