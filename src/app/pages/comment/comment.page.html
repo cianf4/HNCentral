@@ -16,11 +16,11 @@
         </ion-card-subtitle>
         <ion-card-title>{{ parent.title }}</ion-card-title>
         <ion-item lines="none" color="light">
-          <ion-text button [routerLink]="['/news', parent.id]" class="link" slot="end">
-            <u><i>Vai all'articolo</i></u>
+          <ion-text slot="start" color="medium" class="commenti">
+            <i><ion-icon name="chatbox-ellipses-outline"></ion-icon> {{ parent.descendants }} commenti</i>
           </ion-text>
-          <ion-text slot="start" color="medium">
-            <i><ion-icon name="chatbox-ellipses"></ion-icon> {{ parent.descendants }} commenti</i>
+          <ion-text button [routerLink]="['/news', parent.id]" class="link" slot="end">
+            <u><i><ion-icon name="newspaper-outline"></ion-icon> Vai all'articolo</i></u>
           </ion-text>
         </ion-item>
       </ion-card-content>
@@ -36,7 +36,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
-        <ion-list lines="full">
+        <ion-list *ngIf="comment.repliesCount > 0" lines="full">
           <ion-item *ngFor="let reply of replies">
             <ion-label>
               <ion-text color="medium"><p>Risposta di <ion-text class="by">{{ reply.by }}</ion-text> • ({{ reply.readableDate }})</p></ion-text>

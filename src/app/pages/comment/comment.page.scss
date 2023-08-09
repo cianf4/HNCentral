@@ -3,14 +3,22 @@ ion-toolbar {
   --color: white;
 }
 
+ion-text {
+  text-overflow: initial;
+  white-space: normal;
+}
+
 ion-text.link {
+  font-size: 0.96em;
   color: #0da3d4;
 }
+
+ion-text.commenti {
+  font-size: 0.96em;
+}
+
  .by {
    color: #ff9500;
  }
 
- ion-text {
-   text-overflow: initial;
-   white-space: normal;
- }
+
