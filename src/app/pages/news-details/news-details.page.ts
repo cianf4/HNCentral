@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { NewsService } from "../../services/news.service";
-import { DateUtilityService } from "../../services/date-utility.service";
 
 @Component({
   selector: 'app-news-details',
@@ -10,12 +9,12 @@ import { DateUtilityService } from "../../services/date-utility.service";
 })
 export class NewsDetailsPage implements OnInit {
   article: any = null;
-  commentIds: number[] = [];
+  articleId: string | null = this.route.snapshot.paramMap.get('articleId');
+
 
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService,
-    private dateService: DateUtilityService
   ) { }
 
   ngOnInit() {
@@ -23,8 +22,8 @@ export class NewsDetailsPage implements OnInit {
   }
 
   loadArticle() {
-    const id = this.route.snapshot.paramMap.get('articleId');
-    this.newsService.getArticle(id).subscribe((article) => {
+    //const id = this.route.snapshot.paramMap.get('articleId');
+    this.newsService.getArticle(this.articleId).subscribe((article) => {
       this.article = article;
       console.log(article);
     });

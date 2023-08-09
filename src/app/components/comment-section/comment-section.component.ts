@@ -12,7 +12,9 @@ import { NewsService } from "../../services/news.service";
 })
 export class CommentSectionComponent  implements OnInit {
   commentIds: number[] = [];
+  commentIdsLength: number = 0;
   comments: any[] = [];
+  articleId = this.route.snapshot.paramMap.get('articleId');
 
   constructor(
     private route: ActivatedRoute,
@@ -24,26 +26,19 @@ export class CommentSectionComponent  implements OnInit {
   }
 
   loadComments() {
-    const articleId = this.route.snapshot.paramMap.get('articleId');
-    // Carica gli ID dei commenti
-    this.commentsService.getCommentIds(articleId).subscribe((commentIds) => {
+    //const articleId = this.route.snapshot.paramMap.get('articleId');
+    this.commentsService.getCommentIds(this.articleId).subscribe((commentIds) => {
       this.commentIds = commentIds;
-      // Per ogni ID commento, carica il dettaglio completo del commento
-      commentIds.forEach(commentId => {
-        this.commentsService.getComment(commentId).subscribe((comment) => {
-          this.comments.push(comment);
+      this.commentIdsLength = commentIds?.length ?? 0;
+      if (this.commentIdsLength > 0) {
+        commentIds.forEach(commentId => {
+          this.commentsService.getComment(commentId).subscribe((comment) => {
+            this.comments.push(comment);
+          });
         });
-      });
+      }
     });
   }
-
-    getCommentReplies(ids: number[]): CommentApiResult[] {
-        return this.comments.filter((comment) => ids.includes(comment.id));
-    }
-
-    goToComment(commentId: number) {
-
-    }
 
     /**
      loadCommentIds() {

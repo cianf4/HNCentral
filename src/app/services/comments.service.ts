@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { map, Observable } from "rxjs";
 import { environment } from "../../environments/environment";
 import { DateUtilityService } from "./date-utility.service";
+import { NewsService } from "./news.service";
 
 
 export interface CommentApiResult {
@@ -25,8 +26,11 @@ export interface ReadableCommentApiResult extends CommentApiResult {
 })
 export class CommentsService {
 
-  constructor(private http: HttpClient,
-              private dateService: DateUtilityService) { }
+  constructor(
+    private http: HttpClient,
+    private dateService: DateUtilityService,
+    private newsService: NewsService
+  ) { }
 
   getCommentIds(articleId: number | string | null): Observable<number[]> {
     return this.http.get<number[]>(`${environment.apiUrl}/item/${articleId}.json`).pipe(
@@ -34,7 +38,7 @@ export class CommentsService {
     );
   }
 
-  getComment(commentId: number): Observable<ReadableCommentApiResult> {
+  getComment(commentId: number | string | null): Observable<ReadableCommentApiResult> {
     return this.http.get<CommentApiResult>(`${environment.apiUrl}/item/${commentId}.json`).pipe(
       map((comment: CommentApiResult) => {
         const repliesCount = Array.isArray(comment.kids) ? comment.kids.length : 0;

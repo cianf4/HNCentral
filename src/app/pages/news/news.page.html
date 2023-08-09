@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-title>Top News</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,9 @@
       <ion-label>
         <ion-text>{{ article.title }}</ion-text>
         <ion-text color="medium"><p>Da {{ article.by }} • {{ article.readableDate }}</p></ion-text>
-        <ion-text slot="end" *ngIf="article.descendants" class="comments"><ion-icon name="chatbox-outline"></ion-icon> {{ article.descendants }} commenti</ion-text>
+        <ion-text slot="end" *ngIf="article.descendants" class="comments">
+          <ion-icon name="chatbox-outline"></ion-icon> {{ article.descendants }} commenti
+        </ion-text>
       </ion-label>
 
       <ion-badge slot="end">

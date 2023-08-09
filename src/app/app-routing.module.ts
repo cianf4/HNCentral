@@ -16,7 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/news-details/news-details.module').then( m => m.NewsDetailsPageModule)
   },
   {
-    path: 'news/:articleId/:commentId',
+    path: 'comment/:commentId',
     loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
   }
 ];
