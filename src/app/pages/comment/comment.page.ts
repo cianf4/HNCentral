@@ -26,14 +26,20 @@ export class CommentPage implements OnInit {
   }
 
   loadCommentDetails() {
-    this.commentService.getComment(this.commentId).subscribe((comment) => {
-      this.comment = comment;
-      this.loadArticle(comment.parent);
-      if (comment.kids && comment.kids.length > 0) {
-        this.loadReplies(comment.kids);
-      }
-    });
+    const commentId = this.route.snapshot.paramMap.get('commentId');
+    if (commentId) {
+      this.commentService.getComment(commentId).subscribe((comment) => {
+        this.comment = comment;
+        this.loadArticle(comment.parent);
+        this.loadReplies(comment.kids); // Carica le risposte dirette al commento principale
+        for (const reply of this.comment.replies) {
+          this.loadNestedReplies(reply); // Carica tutte le risposte nidificate
+          console.log(reply);
+        }
+      });
+    }
   }
+
 
   loadArticle(articleId: number) {
     this.newsService.getArticle(articleId).subscribe((article) => {
@@ -44,12 +50,23 @@ export class CommentPage implements OnInit {
   loadReplies(replyIds: number[]) {
     for (const replyId of replyIds) {
       this.commentService.getComment(replyId).subscribe((reply) => {
+        reply.replies = []; // Inizializza l'array di risposte nidificate per questa risposta
         this.replies.push(reply);
-        console.log(reply);
+        this.loadNestedReplies(reply); // Carica le risposte nidificate
       });
     }
   }
 
+  loadNestedReplies(reply: ReadableCommentApiResult) {
+    if (reply.kids && reply.kids.length > 0) {
+      for (const nestedReplyId of reply.kids) {
+        this.commentService.getComment(nestedReplyId).subscribe((nestedReply) => {
+          reply.replies.push(nestedReply);
+          this.loadNestedReplies(nestedReply); // Carica ulteriori risposte nidificate
+        });
+      }
+    }
+  }
 
 
   /**

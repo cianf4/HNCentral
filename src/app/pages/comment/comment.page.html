@@ -28,7 +28,7 @@
     <ion-card color="light">
       <ion-card-header>
         <ion-label color="medium">
-          Commento di<ion-text class="by"> {{ comment.by }} </ion-text> • {{ comment.readableDate }}
+          Commento di <ion-text class="by">{{ comment.by }}</ion-text> • {{ comment.readableDate }}
         </ion-label>
         <ion-label color="medium">
           <ion-icon name="arrow-redo-outline"></ion-icon> {{ comment.repliesCount }} risposte
@@ -36,17 +36,25 @@
       </ion-card-header>
       <ion-card-content>
         <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
-        <ion-list *ngIf="comment.repliesCount > 0" lines="full">
-          <ion-item *ngFor="let reply of replies">
-            <ion-label>
-              <ion-text color="medium"><p>Risposta di <ion-text class="by">{{ reply.by }}</ion-text> • ({{ reply.readableDate }})</p></ion-text>
-              <ion-text [innerHTML]="reply.text"></ion-text>
-            </ion-label>
+        <ion-list *ngFor="let reply of replies" color="dark">
+          <ion-item>
+            <ion-text><p>Risposta di {{ reply.by }}</p></ion-text>
+            <ion-text><p>{{ reply.readableDate }}</p></ion-text>
+            <ion-label [innerHTML]="reply.text"></ion-label>
           </ion-item>
+
+          <ng-container *ngIf="reply.replies.length > 0">
+              <ion-list>
+                <ion-item *ngFor="let nestedReply of reply.replies">
+                  <ion-label>
+                    <ion-text><p>{{ nestedReply.by }}</p></ion-text>
+                    <ion-text [innerHTML]="nestedReply.text"></ion-text>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ng-container>
         </ion-list>
       </ion-card-content>
-
-
     </ion-card>
-  </ion-card>
+    </ion-card>
 </ion-content>

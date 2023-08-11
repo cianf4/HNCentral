@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { map, Observable } from "rxjs";
+import { Observable, forkJoin, map, mergeMap, of } from "rxjs";
 import { environment } from "../../environments/environment";
 import { DateUtilityService } from "./date-utility.service";
 import { NewsService } from "./news.service";
@@ -19,6 +19,7 @@ export interface CommentApiResult {
 export interface ReadableCommentApiResult extends CommentApiResult {
   readableDate: string;
   repliesCount: number;
+  replies: ReadableCommentApiResult[];
 }
 
 @Injectable({
@@ -40,15 +41,31 @@ export class CommentsService {
 
   getComment(commentId: number | string | null): Observable<ReadableCommentApiResult> {
     return this.http.get<CommentApiResult>(`${environment.apiUrl}/item/${commentId}.json`).pipe(
-      map((comment: CommentApiResult) => {
+      mergeMap((comment: CommentApiResult) => {
         const repliesCount = Array.isArray(comment.kids) ? comment.kids.length : 0;
-        return {
+        const readableComment: ReadableCommentApiResult = {
           ...comment,
           readableDate: this.dateService.convertUnixToDate(comment.time),
-          repliesCount: repliesCount
+          repliesCount: repliesCount,
+          replies: []
         };
+        if (repliesCount > 0) {
+          const repliesObservableArray: Observable<ReadableCommentApiResult>[] = [];
+          for (const replyId of comment.kids) {
+            repliesObservableArray.push(this.getComment(replyId));
+          }
+          return forkJoin(repliesObservableArray).pipe(
+            map((replies: ReadableCommentApiResult[]) => {
+              readableComment.replies = replies;
+              return readableComment;
+            })
+          );
+        } else {
+          return of(readableComment);
+        }
       })
     );
   }
+
 
 }
