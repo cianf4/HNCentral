@@ -36,7 +36,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
-        <ion-card *ngFor="let reply of replies" lines="full">
+        <ion-card *ngFor="let reply of replies">
           <ion-card-content>
             <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ reply.by }}</ion-text> • {{ reply.readableDate }}</p></ion-text>
             <ion-text [innerHTML]="reply.text" color="dark"></ion-text>
@@ -47,6 +47,16 @@
                 <ion-label>
                   <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ nestedReply.by }}</ion-text> • {{ nestedReply.readableDate }}</p></ion-text>
                   <ion-text [innerHTML]="nestedReply.text"></ion-text>
+                  <ion-card *ngIf="nestedReply.repliesCount > 0">
+                    <ion-list lines="full">
+                      <ion-item *ngFor="let nested2Reply of nestedReply.replies">
+                        <ion-label>
+                          <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ nested2Reply.by }}</ion-text> • {{ nested2Reply.readableDate }}</p></ion-text>
+                          <ion-text [innerHTML]="nested2Reply.text"></ion-text>
+                        </ion-label>
+                      </ion-item>
+                    </ion-list>
+                  </ion-card>
                 </ion-label>
               </ion-item>
             </ion-list>

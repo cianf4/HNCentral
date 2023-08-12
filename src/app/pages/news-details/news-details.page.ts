@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { NewsService } from "../../services/news.service";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-news-details',
@@ -15,15 +16,21 @@ export class NewsDetailsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.loadArticle();
   }
 
-  loadArticle() {
+  async loadArticle() {
+    const loading = await this.loadingController.create({
+      spinner: 'circular',
+    });
+    await loading.present();
     //const id = this.route.snapshot.paramMap.get('articleId');
     this.newsService.getArticle(this.articleId).subscribe((article) => {
+      loading.dismiss();
       this.article = article;
       console.log(article);
     });

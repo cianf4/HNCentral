@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import {NewsService, ReadableNewsApiResult} from "../../services/news.service";
-import {CommentsService, ReadableCommentApiResult} from "../../services/comments.service";
+import { NewsService, ReadableNewsApiResult } from "../../services/news.service";
+import { CommentsService, ReadableCommentApiResult } from "../../services/comments.service";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-comment',
@@ -14,21 +15,26 @@ export class CommentPage implements OnInit {
   parent: ReadableNewsApiResult | null = null;
   replies: ReadableCommentApiResult[] = [];
 
-
   constructor(
     private route: ActivatedRoute,
     private newsService: NewsService,
-    private commentService: CommentsService
+    private commentService: CommentsService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.loadCommentDetails();
   }
 
-  loadCommentDetails() {
+  async loadCommentDetails() {
+    const loading = await this.loadingController.create({
+      spinner: 'circular',
+    });
+    await loading.present();
     const commentId = this.route.snapshot.paramMap.get('commentId');
     if (commentId) {
       this.commentService.getComment(commentId).subscribe((comment) => {
+        loading.dismiss();
         this.comment = comment;
         this.loadArticle(comment.parent);
         this.loadReplies(comment.kids); // Carica le risposte dirette al commento principale
@@ -58,11 +64,12 @@ export class CommentPage implements OnInit {
   }
 
   loadNestedReplies(reply: ReadableCommentApiResult) {
-    if (reply.kids && reply.kids.length > 0) {
+    if (reply.kids && reply.repliesCount > 0) {
       for (const nestedReplyId of reply.kids) {
         this.commentService.getComment(nestedReplyId).subscribe((nestedReply) => {
           reply.replies.push(nestedReply);
-          this.loadNestedReplies(nestedReply); // Carica ulteriori risposte nidificate
+          this.loadNestedReplies(nestedReply);
+          console.log(nestedReply);
         });
       }
     }
