@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReadableCommentApiResult, CommentsService } from "../../services/comments.service";
-import { ReadableNewsApiResult } from "../../services/news.service";
+import { ReadableNewsApiResult, NewsService } from "../../services/news.service";
 
 @Component({
     selector: 'app-comment-page', // Cambia 'app-comments' a 'app-comment'
@@ -15,7 +15,8 @@ export class CommentPage implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private commentService: CommentsService
+        private commentService: CommentsService,
+        private newsService: NewsService
     ) {}
 
     ngOnInit() {
@@ -27,6 +28,7 @@ export class CommentPage implements OnInit {
 
     loadCommentAndReplies(commentId: number) {
         this.commentService.getComment(commentId).subscribe(comment => {
+            this.loadArticle(comment.parent);
             this.comment = comment;
             this.loadReplies(comment);
         });
@@ -40,4 +42,11 @@ export class CommentPage implements OnInit {
             });
         });
     }
+
+    loadArticle(articleId: number) {
+        this.newsService.getArticle(articleId).subscribe((article) => {
+            this.parent = article;
+        });
+    }
+
 }

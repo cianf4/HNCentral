@@ -1,19 +1,9 @@
-<!-- comment.component.html -->
-<ion-card *ngFor="let comment of comments">
-  <ion-card-header>
+<ion-card-content *ngFor="let comment of comments">
     <ion-label color="medium">
-      Commento di <ion-text class="by">{{ comment.by }}</ion-text> • {{ comment.readableDate }}
+      <p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ comment.by }}</ion-text> • {{ comment.readableDate }}</p>
     </ion-label>
-    <ion-label color="medium">
-      <ion-icon name="arrow-redo-outline"></ion-icon> {{ comment.repliesCount }} risposte
-    </ion-label>
-  </ion-card-header>
-  <ion-card-content>
     <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
-  </ion-card-content>
   <ion-card *ngIf="comment.replies.length > 0" class="nested-comments">
-    <ion-card-content>
       <app-comment [comments]="comment.replies"></app-comment>
-    </ion-card-content>
   </ion-card>
-</ion-card>
+</ion-card-content>
