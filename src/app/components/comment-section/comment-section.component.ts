@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { CommentsService, CommentApiResult } from "../../services/comments.service";
-import { NewsService } from "../../services/news.service";
-
 
 
 @Component({

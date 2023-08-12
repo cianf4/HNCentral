@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NewsDetailsPageRoutingModule } from './news-details-routing.module';
 
 import { NewsDetailsPage } from './news-details.page';
-import {CommentSectionComponent} from "../../components/comment-section/comment-section.component";
+import { CommentSectionComponent } from "../../components/comment-section/comment-section.component";
 
 @NgModule({
   imports: [

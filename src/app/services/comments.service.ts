@@ -67,5 +67,11 @@ export class CommentsService {
     );
   }
 
+  getArticleCommentsIds(articleId: number): Observable<number[]> {
+    return this.http.get<number[]>(`${environment.apiUrl}/item/${articleId}.json`)
+        .pipe(
+            map((article: any) => article.kids)
+        );
+  }
 
 }

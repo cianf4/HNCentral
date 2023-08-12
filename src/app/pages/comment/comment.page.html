@@ -7,74 +7,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card *ngIf="comment && parent">
-    <ion-card color="light">
-      <ion-card-content>
-        <ion-card-subtitle>
-          <ion-text color="medium">In risposta all'articolo di <ion-text class="by">{{ parent.by }}</ion-text> del {{ parent.readableDate }}</ion-text>
-        </ion-card-subtitle>
-        <ion-card-title>{{ parent.title }}</ion-card-title>
-        <ion-item lines="none" color="light">
-          <ion-text slot="start" color="medium" class="commenti">
-            <i><ion-icon name="chatbox-ellipses-outline"></ion-icon> {{ parent.descendants }} commenti</i>
-          </ion-text>
-          <ion-text button [routerLink]="['/news', parent.id]" class="link" slot="end">
-            <u><i><ion-icon name="newspaper-outline"></ion-icon> Vai all'articolo</i></u>
-          </ion-text>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-    <ion-card color="light">
-      <ion-card-header>
-        <ion-label color="medium">
-          Commento di <ion-text class="by">{{ comment.by }}</ion-text> • {{ comment.readableDate }}
-        </ion-label>
-        <ion-label color="medium">
-          <ion-icon name="arrow-redo-outline"></ion-icon> {{ comment.repliesCount }} risposte
-        </ion-label>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
-        <ion-card *ngFor="let reply of comment.replies">
-          <ion-card-content>
-            <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ reply.by }}</ion-text> • {{ reply.readableDate }}</p></ion-text>
-            <ion-text [innerHTML]="reply.text" color="dark"></ion-text>
-          </ion-card-content>
-          <ion-card *ngIf="reply.repliesCount > 0">
-            <ion-list lines="full">
-              <ion-item *ngFor="let nestedReply of reply.replies">
-                <ion-label>
-                  <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ nestedReply.by }}</ion-text> • {{ nestedReply.readableDate }}</p></ion-text>
-                  <ion-text [innerHTML]="nestedReply.text"></ion-text>
-                  <ion-card *ngIf="nestedReply.repliesCount > 0">
-                    <ion-list lines="full">
-                      <ion-item *ngFor="let nested2Reply of nestedReply.replies">
-                        <ion-label>
-                          <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ nested2Reply.by }}</ion-text> • {{ nested2Reply.readableDate }}</p></ion-text>
-                          <ion-text [innerHTML]="nested2Reply.text"></ion-text>
-                          <ion-card *ngIf="nested2Reply.repliesCount > 0">
-                            <ion-list lines="full">
-                              <ion-item *ngFor="let nested3Reply of nested2Reply.replies">
-                                <ion-label>
-                                  <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ nested2Reply.by }}</ion-text> • {{ nested2Reply.readableDate }}</p></ion-text>
-                                  <ion-text [innerHTML]="nested3Reply.text"></ion-text>
-                                </ion-label>
-                              </ion-item>
-                            </ion-list>
-                          </ion-card>
-                        </ion-label>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card>
-                </ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card>
-        </ion-card>
-      </ion-card-content>
-    </ion-card>
+<ion-content [fullscreen]="true" *ngIf="comment">
+  <ion-card>
+    <ion-card-content>
+      <!--
+      <ion-card-subtitle>
+        <ion-text color="medium">In risposta all'articolo di <ion-text class="by">{{ parent.by }}</ion-text> del {{ parent.readableDate }}</ion-text>
+      </ion-card-subtitle>
+      -->
+
+    <ion-label color="medium">
+      Commento di <ion-text class="by">{{ comment.by }}</ion-text> • {{ comment.readableDate }}
+    </ion-label>
+      <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
+    </ion-card-content>
   </ion-card>
+  <app-comment [comments]="comment.replies"></app-comment>
 </ion-content>
-
-
