@@ -18,7 +18,11 @@ const routes: Routes = [
   {
     path: 'comment/:commentId',
     loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
+  },  {
+    path: 'ask',
+    loadChildren: () => import('./pages/ask/ask.module').then( m => m.AskPageModule)
   }
+
 ];
 
 @NgModule({

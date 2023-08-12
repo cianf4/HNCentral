@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>Ask</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item button *ngFor="let ask of asks" [routerLink]="[ask.id]">
+      <ion-label>
+        <ion-text>{{ ask.title }}</ion-text>
+        <ion-text color="medium"><p>Da {{ ask.by }} • {{ ask.readableDate }}</p></ion-text>
+        <ion-text slot="end" *ngIf="ask.descendants" class="comments">
+          <ion-icon name="chatbox-outline"></ion-icon> {{ ask.descendants }} commenti
+        </ion-text>
+      </ion-label>
+
+      <ion-badge slot="end">
+        <ion-icon name="star"></ion-icon>{{ ask.score }}
+      </ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>

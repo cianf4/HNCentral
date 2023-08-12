@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsApiResult, NewsService } from "../../services/news.service";
+import { NewsApiResult, NewsService, ReadableNewsApiResult } from "../../services/news.service";
 import { InfiniteScrollCustomEvent, LoadingController } from "@ionic/angular";
 
 
