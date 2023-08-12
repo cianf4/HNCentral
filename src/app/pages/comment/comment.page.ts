@@ -26,54 +26,52 @@ export class CommentPage implements OnInit {
     this.loadCommentDetails();
   }
 
-  async loadCommentDetails() {
-    const loading = await this.loadingController.create({
-      spinner: 'circular',
-    });
-    await loading.present();
-    const commentId = this.route.snapshot.paramMap.get('commentId');
-    if (commentId) {
-      this.commentService.getComment(commentId).subscribe((comment) => {
-        loading.dismiss();
-        this.comment = comment;
-        this.loadArticle(comment.parent);
-        this.loadReplies(comment.kids); // Carica le risposte dirette al commento principale
-        for (const reply of this.comment.replies) {
-          this.loadNestedReplies(reply); // Carica tutte le risposte nidificate
-          console.log(reply);
-        }
-      });
-    }
-  }
-
-
-  loadArticle(articleId: number) {
-    this.newsService.getArticle(articleId).subscribe((article) => {
-      this.parent = article;
-    });
-  }
-
-  loadReplies(replyIds: number[]) {
-    for (const replyId of replyIds) {
-      this.commentService.getComment(replyId).subscribe((reply) => {
-        reply.replies = []; // Inizializza l'array di risposte nidificate per questa risposta
-        this.replies.push(reply);
-        this.loadNestedReplies(reply); // Carica le risposte nidificate
-      });
-    }
-  }
-
-  loadNestedReplies(reply: ReadableCommentApiResult) {
-    if (reply.kids && reply.repliesCount > 0) {
-      for (const nestedReplyId of reply.kids) {
-        this.commentService.getComment(nestedReplyId).subscribe((nestedReply) => {
-          reply.replies.push(nestedReply);
-          this.loadNestedReplies(nestedReply);
-          console.log(nestedReply);
+    async loadCommentDetails() {
+        const loading = await this.loadingController.create({
+            spinner: 'circular',
         });
-      }
+        await loading.present();
+
+        const commentId = this.route.snapshot.paramMap.get('commentId');
+
+        if (commentId) {
+            this.commentService.getComment(commentId).subscribe((comment) => {
+                this.comment = comment;
+                this.loadArticle(comment.parent);
+                this.loadReplies(comment.kids);
+                loading.dismiss();
+            });
+        }
     }
-  }
+
+    loadArticle(articleId: number) {
+        this.newsService.getArticle(articleId).subscribe((article) => {
+            this.parent = article;
+        });
+    }
+
+    async loadReplies(replyIds: number[]) {
+        for (const replyId of replyIds) {
+            this.commentService.getComment(replyId).subscribe((reply) => {
+                reply.replies = []; // Inizializza l'array di risposte nidificate per questa risposta
+                this.replies.push(reply);
+                this.loadNestedReplies(reply); // Carica le risposte nidificate
+            });
+        }
+    }
+
+    loadNestedReplies(reply: ReadableCommentApiResult) {
+        if (reply.kids && reply.repliesCount > 0) {
+            for (const nestedReplyId of reply.kids) {
+                this.commentService.getComment(nestedReplyId).subscribe((nestedReply) => {
+                    reply.replies.push(nestedReply);
+                    this.loadNestedReplies(nestedReply);
+                    console.log(nestedReply);
+                });
+            }
+        }
+    }
+
 
 
   /**

@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngIf="comment && parent && replies">
+  <ion-card *ngIf="comment && parent">
     <ion-card color="light">
       <ion-card-content>
         <ion-card-subtitle>
@@ -36,7 +36,7 @@
       </ion-card-header>
       <ion-card-content>
         <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
-        <ion-card *ngFor="let reply of replies">
+        <ion-card *ngFor="let reply of comment.replies">
           <ion-card-content>
             <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ reply.by }}</ion-text> • {{ reply.readableDate }}</p></ion-text>
             <ion-text [innerHTML]="reply.text" color="dark"></ion-text>
@@ -53,6 +53,16 @@
                         <ion-label>
                           <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ nested2Reply.by }}</ion-text> • {{ nested2Reply.readableDate }}</p></ion-text>
                           <ion-text [innerHTML]="nested2Reply.text"></ion-text>
+                          <ion-card *ngIf="nested2Reply.repliesCount > 0">
+                            <ion-list lines="full">
+                              <ion-item *ngFor="let nested3Reply of nested2Reply.replies">
+                                <ion-label>
+                                  <ion-text color="medium"><p><ion-icon name="arrow-redo-outline"></ion-icon> <ion-text class="by"> {{ nested2Reply.by }}</ion-text> • {{ nested2Reply.readableDate }}</p></ion-text>
+                                  <ion-text [innerHTML]="nested3Reply.text"></ion-text>
+                                </ion-label>
+                              </ion-item>
+                            </ion-list>
+                          </ion-card>
                         </ion-label>
                       </ion-item>
                     </ion-list>
@@ -67,16 +77,4 @@
   </ion-card>
 </ion-content>
 
-<!--
-      <ion-card-content>
-        <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
-        <ion-list *ngIf="comment.repliesCount > 0" lines="full">
-          <ion-item *ngFor="let reply of replies">
-            <ion-label>
-              <ion-text color="medium"><p>Risposta di <ion-text class="by">{{ reply.by }}</ion-text> • ({{ reply.readableDate }})</p></ion-text>
-              <ion-text [innerHTML]="reply.text"></ion-text>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
--->
+
