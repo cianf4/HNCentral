@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReadableCommentApiResult, CommentsService } from "../../services/comments.service";
 import { ReadableNewsApiResult, NewsService } from "../../services/news.service";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
     selector: 'app-comment-page', // Cambia 'app-comments' a 'app-comment'
@@ -15,6 +16,7 @@ export class CommentPage implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private loadingController: LoadingController,
         private commentService: CommentsService,
         private newsService: NewsService
     ) {}
@@ -26,11 +28,18 @@ export class CommentPage implements OnInit {
         });
     }
 
-    loadCommentAndReplies(commentId: number) {
+    async loadCommentAndReplies(commentId: number) {
+        const loading = await this.loadingController.create({
+            spinner: 'circular',
+        });
+        await loading.present();
         this.commentService.getComment(commentId).subscribe(comment => {
             this.loadArticle(comment.parent);
             this.comment = comment;
-            this.loadReplies(comment);
+            if(this.comment.repliesCount > 0){
+                this.loadReplies(comment);
+            }
+            loading.dismiss();
         });
     }
 

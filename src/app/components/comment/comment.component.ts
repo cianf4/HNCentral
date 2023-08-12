@@ -8,4 +8,10 @@ import {ReadableCommentApiResult} from "../../services/comments.service";
 })
 export class CommentComponent {
   @Input() comments: ReadableCommentApiResult[] = [];
+  showFullText: { [commentId: string]: boolean } = {};
+  maxLength: number = 250;
+
+  toggleText(commentId: string | number) {
+    this.showFullText[commentId] = !this.showFullText[commentId];
+  }
 }

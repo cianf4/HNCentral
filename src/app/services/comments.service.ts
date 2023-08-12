@@ -3,7 +3,6 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, forkJoin, map, mergeMap, of } from "rxjs";
 import { environment } from "../../environments/environment";
 import { DateUtilityService } from "./date-utility.service";
-import { NewsService } from "./news.service";
 
 
 export interface CommentApiResult {
@@ -30,7 +29,6 @@ export class CommentsService {
   constructor(
     private http: HttpClient,
     private dateService: DateUtilityService,
-    private newsService: NewsService
   ) { }
 
   getCommentIds(articleId: number | string | null): Observable<number[]> {
@@ -41,37 +39,30 @@ export class CommentsService {
 
   getComment(commentId: number | string | null): Observable<ReadableCommentApiResult> {
     return this.http.get<CommentApiResult>(`${environment.apiUrl}/item/${commentId}.json`).pipe(
-      mergeMap((comment: CommentApiResult) => {
-        const repliesCount = Array.isArray(comment.kids) ? comment.kids.length : 0;
-        const readableComment: ReadableCommentApiResult = {
-          ...comment,
-          readableDate: this.dateService.convertUnixToDate(comment.time),
-          repliesCount: repliesCount,
-          replies: []
-        };
-        if (repliesCount > 0) {
-          const repliesObservableArray: Observable<ReadableCommentApiResult>[] = [];
-          for (const replyId of comment.kids) {
-            repliesObservableArray.push(this.getComment(replyId));
+        mergeMap((comment: CommentApiResult) => {
+          const repliesCount = Array.isArray(comment.kids) ? comment.kids.length : 0;
+          const readableComment: ReadableCommentApiResult = {
+            ...comment,
+            readableDate: this.dateService.convertUnixToDate(comment.time),
+            repliesCount: repliesCount,
+            replies: []
+          };
+          if (repliesCount > 0) {
+            const repliesObservableArray: Observable<ReadableCommentApiResult>[] = [];
+            for (const replyId of comment.kids) {
+              repliesObservableArray.push(this.getComment(replyId));
+            }
+            return forkJoin(repliesObservableArray).pipe(
+                map((replies: ReadableCommentApiResult[]) => {
+                  readableComment.replies = replies;
+                  return readableComment;
+                })
+            );
+          } else {
+            return of(readableComment);
           }
-          return forkJoin(repliesObservableArray).pipe(
-            map((replies: ReadableCommentApiResult[]) => {
-              readableComment.replies = replies;
-              return readableComment;
-            })
-          );
-        } else {
-          return of(readableComment);
-        }
-      })
+        })
     );
-  }
-
-  getArticleCommentsIds(articleId: number): Observable<number[]> {
-    return this.http.get<number[]>(`${environment.apiUrl}/item/${articleId}.json`)
-        .pipe(
-            map((article: any) => article.kids)
-        );
   }
 
 }

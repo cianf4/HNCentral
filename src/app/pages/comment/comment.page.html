@@ -32,14 +32,14 @@
       <ion-label color="medium">
         <p>Commento di <ion-text class="by">{{ comment.by }}</ion-text> • {{ comment.readableDate }}</p>
       </ion-label>
-      <ion-label *ngIf="comment.replies" color="medium">
+      <ion-label *ngIf="comment.repliesCount > 0" color="medium">
         <ion-text class="risposte"><ion-icon name="arrow-redo-outline"></ion-icon> {{ comment.repliesCount }} risposte</ion-text>
       </ion-label>
     </ion-card-header>
     <ion-card-content>
       <ion-text [innerHTML]="comment.text" color="dark"></ion-text><br>
     </ion-card-content>
-    <ion-card>
+    <ion-card *ngIf="comment.repliesCount > 0">
       <app-comment [comments]="comment.replies"></app-comment>
     </ion-card>
   </ion-card>
