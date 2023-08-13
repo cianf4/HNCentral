@@ -15,7 +15,8 @@
     </ion-card-header>
 
     <ion-card-content>
-        <ion-button expand="full" (click)="openArticle()">
+      <ion-text *ngIf="article.text" [innerHTML]="article.text" color="dark"></ion-text>
+      <ion-button expand="full" (click)="openArticle()">
           Leggi l'articolo
         </ion-button>
       <ion-item lines="none">
@@ -28,17 +29,5 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
-
-<!--
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>
-        Commenti:
-      </ion-card-title>
-    </ion-card-header>
-    <ion-item *ngFor="let comment of article?.kids">
-      {{ comment }}
-    </ion-item>
-  </ion-card>-->
 <app-comment-section></app-comment-section>
 </ion-content>

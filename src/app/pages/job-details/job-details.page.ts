@@ -11,6 +11,8 @@ import {JobsService} from "../../services/jobs.service";
 export class JobDetailsPage implements OnInit {
   job: any = null;
   jobId: string | null = this.route.snapshot.paramMap.get('jobId');
+  showFullText: { [commentId: string]: boolean } = {};
+  maxLength: number = 250;
 
   constructor(
       private route: ActivatedRoute,
@@ -36,6 +38,10 @@ export class JobDetailsPage implements OnInit {
 
   openJob() {
     window.open(this.job.url);
+  }
+
+  toggleText(commentId: string | number) {
+    this.showFullText[commentId] = !this.showFullText[commentId];
   }
 
 }

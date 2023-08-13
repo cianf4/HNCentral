@@ -13,6 +13,8 @@ export class CommentSectionComponent  implements OnInit {
   commentIdsLength: number = 0;
   comments: any[] = [];
   articleId = this.route.snapshot.paramMap.get('articleId');
+  showFullText: { [commentId: string]: boolean } = {};
+  maxLength: number = 350;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +38,12 @@ export class CommentSectionComponent  implements OnInit {
         });
       }
     });
+  }
+
+
+
+  toggleText(commentId: string | number) {
+        this.showFullText[commentId] = !this.showFullText[commentId];
   }
 
     /**

@@ -12,8 +12,11 @@
     <ion-card-content>
     <ion-card-subtitle>Inviato da <ion-text class="by">{{ job.by }}</ion-text> il {{ job.readableDate }}</ion-card-subtitle>
       <ion-card-title>{{ job.title }}</ion-card-title>
-      <ion-text [innerHTML]="job.text" color="dark"></ion-text><br>
-      <ion-button expand="full" (click)="openJob()">
+      <ion-text [innerHTML]="showFullText[job.id] ? job.text : (job.text | slice:0:maxLength) + (job.text.length > maxLength ? '...' : '')" color="dark"></ion-text>
+      <ion-text button class="link" *ngIf="job.text.length > maxLength" (click)="toggleText(job.id)">
+        {{ showFullText[job.id] ? 'Nascondi' : 'Mostra' }}
+      </ion-text>
+      <ion-button *ngIf="job.url" expand="full" (click)="openJob()">
         Visualizza offerta
       </ion-button>
     </ion-card-content>

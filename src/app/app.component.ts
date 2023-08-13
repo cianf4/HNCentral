@@ -9,9 +9,9 @@ export class AppComponent {
   public menuType: string = 'reveal';
   public appPages = [
     {
-      title: 'Home',
+      title: 'News',
       url: '/news',
-      icon: 'home'
+      icon: 'newspaper'
     },
     {
       title: 'Ask',
