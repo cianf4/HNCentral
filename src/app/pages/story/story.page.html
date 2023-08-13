@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ story?.title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/news"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngIf="story">
+    <ion-card-header>
+      <ion-card-subtitle>Inviato da {{ story.by }} il {{ story.readableDate }}</ion-card-subtitle>
+      <ion-card-title>{{ story.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ng-container *ngIf="story.text">
+        <ion-text [innerHTML]="showFullText[story.id] ? story.text : (story.text | slice:0:maxLength) + (story.text.length > maxLength ? '...' : '')" color="dark"></ion-text>
+        <ion-text button class="link" *ngIf="story.text.length > maxLength" (click)="toggleText(story.id)">
+          {{ showFullText[story.id] ? 'Nascondi' : 'Mostra' }}
+        </ion-text>
+      </ng-container>
+      <ion-button *ngIf="story.url" expand="full" (click)="openArticle()">
+        Leggi l'articolo
+      </ion-button>
+      <ion-item lines="none">
+        <ion-text *ngIf="story.descendants" color="secondary" color="medium">
+          <ion-icon name="chatbox-ellipses"></ion-icon> {{ story.descendants }} commenti
+        </ion-text>
+        <ion-badge *ngIf="story.score > 1" slot="end">
+          <ion-icon name="star"></ion-icon> {{ story.score }} punti
+        </ion-badge>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+    <app-comment-section></app-comment-section>
+</ion-content>

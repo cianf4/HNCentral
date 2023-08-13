@@ -13,7 +13,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item button *ngFor="let ask of asks" [routerLink]="[ask.id]">
+    <ion-item button *ngFor="let ask of asks" [routerLink]="['/story', ask.id]">
       <ion-label>
         <ion-text>{{ ask.title }}</ion-text>
         <ion-text color="medium"><p>Da {{ ask.by }} • {{ ask.readableDate }}</p></ion-text>

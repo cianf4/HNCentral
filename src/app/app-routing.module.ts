@@ -42,7 +42,12 @@ const routes: Routes = [
   {
     path: 'jobs/:jobId',
     loadChildren: () => import('./pages/job-details/job-details.module').then( m => m.JobDetailsPageModule)
+  },
+  {
+    path: 'story/:storyId',
+    loadChildren: () => import('./pages/story/story.module').then( m => m.StoryPageModule)
   }
+
 
 
 

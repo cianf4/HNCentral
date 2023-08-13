@@ -12,7 +12,7 @@ export class CommentSectionComponent  implements OnInit {
   commentIds: number[] = [];
   commentIdsLength: number = 0;
   comments: any[] = [];
-  articleId = this.route.snapshot.paramMap.get('articleId');
+  articleId = this.route.snapshot.paramMap.get('storyId');
   showFullText: { [commentId: string]: boolean } = {};
   maxLength: number = 350;
 

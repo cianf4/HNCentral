@@ -13,7 +13,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item button *ngFor="let job of jobs" [routerLink]="[job.id]">
+    <ion-item button *ngFor="let job of jobs" [routerLink]="['/story', job.id]">
       <ion-label>
         <ion-text>{{ job.title }}</ion-text>
         <ion-text color="medium"><p>Da <ion-text class="by">{{ job.by }}</ion-text> • {{ job.readableDate }}</p></ion-text>

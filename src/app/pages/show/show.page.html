@@ -13,7 +13,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item button *ngFor="let show of shows" [routerLink]="[show.id]">
+    <ion-item button *ngFor="let show of shows" [routerLink]="['/story', show.id]">
       <ion-label>
         <ion-text>{{ show.title }}</ion-text>
         <ion-text color="medium"><p>Da {{ show.by }} • {{ show.readableDate }}</p></ion-text>
