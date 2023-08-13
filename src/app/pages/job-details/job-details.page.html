@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ job?.title }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/news"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngIf="job">
+    <ion-card-content>
+    <ion-card-subtitle>Inviato da <ion-text class="by">{{ job.by }}</ion-text> il {{ job.readableDate }}</ion-card-subtitle>
+      <ion-card-title>{{ job.title }}</ion-card-title>
+      <ion-text [innerHTML]="job.text" color="dark"></ion-text><br>
+      <ion-button expand="full" (click)="openJob()">
+        Visualizza offerta
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

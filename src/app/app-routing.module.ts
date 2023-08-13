@@ -34,7 +34,16 @@ const routes: Routes = [
   {
     path: 'show/:showId',
     loadChildren: () => import('./pages/show-details/show-details.module').then( m => m.ShowDetailsPageModule)
+  },
+  {
+    path: 'jobs',
+    loadChildren: () => import('./pages/jobs/jobs.module').then( m => m.JobsPageModule)
+  },
+  {
+    path: 'jobs/:jobId',
+    loadChildren: () => import('./pages/job-details/job-details.module').then( m => m.JobDetailsPageModule)
   }
+
 
 
 ];

@@ -9,7 +9,7 @@ import { LoadingController } from "@ionic/angular";
 })
 export class ShowPage implements OnInit {
   showIds: number[] = [];
-  shows: any[] =[];
+  shows: any[] = [];
 
   constructor(
       private showService: ShowService,

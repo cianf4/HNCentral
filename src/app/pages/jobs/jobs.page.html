@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>Jobs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item button *ngFor="let job of jobs" [routerLink]="[job.id]">
+      <ion-label>
+        <ion-text>{{ job.title }}</ion-text>
+        <ion-text color="medium"><p>Da <ion-text class="by">{{ job.by }}</ion-text> • {{ job.readableDate }}</p></ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
