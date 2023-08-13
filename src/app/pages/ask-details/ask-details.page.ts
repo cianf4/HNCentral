@@ -27,11 +27,10 @@ export class AskDetailsPage implements OnInit {
       spinner: 'circular',
     });
     await loading.present();
-    //const id = this.route.snapshot.paramMap.get('articleId');
-    this.askService.getAsk(this.askId).subscribe((article) => {
+    this.askService.getAsk(this.askId).subscribe((ask) => {
       loading.dismiss();
-      this.ask = article;
-      console.log(article);
+      this.ask = ask;
+      console.log(ask);
     });
   }
 

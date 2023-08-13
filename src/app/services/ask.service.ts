@@ -16,6 +16,7 @@ export interface AskApiResult {
   type: string;
 }
 
+
 export interface ReadableAskApiResult extends AskApiResult {
   readableDate: string;
 }

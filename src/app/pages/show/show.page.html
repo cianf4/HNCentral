@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>Show</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item button *ngFor="let show of shows" [routerLink]="[show.id]">
+      <ion-label>
+        <ion-text>{{ show.title }}</ion-text>
+        <ion-text color="medium"><p>Da {{ show.by }} • {{ show.readableDate }}</p></ion-text>
+        <ion-text slot="end" *ngIf="show.descendants" class="comments">
+          <ion-icon name="chatbox-outline"></ion-icon> {{ show.descendants }} commenti
+        </ion-text>
+      </ion-label>
+
+      <ion-badge slot="end">
+        <ion-icon name="star"></ion-icon>{{ show.score }}
+      </ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>

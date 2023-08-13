@@ -22,7 +22,6 @@ export class AskPage implements OnInit {
 
   async loadAskStories() {
     const loading = await this.loadingController.create({
-      //message: 'Attendi..',
       spinner: 'circular',
     });
     await loading.present();

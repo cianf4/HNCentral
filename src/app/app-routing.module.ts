@@ -26,7 +26,16 @@ const routes: Routes = [
   {
     path: 'ask/:askId',
     loadChildren: () => import('./pages/ask-details/ask-details.module').then( m => m.AskDetailsPageModule)
+  },
+  {
+    path: 'show',
+    loadChildren: () => import('./pages/show/show.module').then( m => m.ShowPageModule)
+  },
+  {
+    path: 'show/:showId',
+    loadChildren: () => import('./pages/show-details/show-details.module').then( m => m.ShowDetailsPageModule)
   }
+
 
 ];
 
