@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AskApiResult, AskService, ReadableAskApiResult} from "../../services/ask.service";
+import { AskApiResult, AskService, ReadableAskApiResult } from "../../services/ask.service";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-ask',
@@ -11,15 +12,22 @@ export class AskPage implements OnInit {
   asks: any[] = [];
 
   constructor(
-      private askService: AskService
+      private askService: AskService,
+      private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.loadAskStories();
   }
 
-  loadAskStories() {
+  async loadAskStories() {
+    const loading = await this.loadingController.create({
+      //message: 'Attendi..',
+      spinner: 'circular',
+    });
+    await loading.present();
     this.askService.getAskStories().subscribe(response => {
+      loading.dismiss();
       this.askIds = response;
       console.log(response);
       this.askIds.forEach(askId => {

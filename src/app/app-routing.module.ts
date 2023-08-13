@@ -18,9 +18,14 @@ const routes: Routes = [
   {
     path: 'comment/:commentId',
     loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
-  },  {
+  },
+  {
     path: 'ask',
     loadChildren: () => import('./pages/ask/ask.module').then( m => m.AskPageModule)
+  },
+  {
+    path: 'ask/:askId',
+    loadChildren: () => import('./pages/ask-details/ask-details.module').then( m => m.AskDetailsPageModule)
   }
 
 ];

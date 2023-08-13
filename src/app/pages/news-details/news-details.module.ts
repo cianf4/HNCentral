@@ -16,6 +16,9 @@ import { CommentSectionComponent } from "../../components/comment-section/commen
     IonicModule,
     NewsDetailsPageRoutingModule
   ],
+  exports: [
+    CommentSectionComponent
+  ],
   declarations: [NewsDetailsPage, CommentSectionComponent]
 })
 export class NewsDetailsPageModule {}
