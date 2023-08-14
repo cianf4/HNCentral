@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <ion-card *ngIf="user">
     <ion-item lines="none">
-        <ion-badge slot="end">{{ user.karma }} karma</ion-badge>
+        <ion-badge slot="end"><ion-icon name="star"></ion-icon> {{ user.karma }} karma</ion-badge>
       <ion-label>
         <ion-text color="dark"><h1><ion-icon name="person"></ion-icon> {{ user.id }}</h1></ion-text>
         <ion-text color="medium"><p>Registrato il {{ user.readableDate }}</p></ion-text>
@@ -20,8 +20,8 @@
       <ion-text *ngIf="user.about" [innerHTML]="user.about" color="dark"></ion-text>
     </ion-card-content>
     <ion-card-content>
-      <ion-button slot="start" expand="full">lista storie</ion-button>
-      <ion-button slot="start" expand="full">lista commenti</ion-button>
+      <ion-button slot="start" expand="full" [routerLink]="['/user', user.id, 'submissions']">lista storie</ion-button>
+      <ion-button slot="start" expand="full" >lista commenti</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

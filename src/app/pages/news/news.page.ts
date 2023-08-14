@@ -36,7 +36,6 @@ export class NewsPage implements OnInit {
       console.log(ids);
       console.log(pagedIds)
       //console.log(this.newsService.fromArrayToKeyValue(ids));
-
       event?.target.complete();
       if (event) {
         event.target.disabled = this.totalPages === this.currentPage;
@@ -46,7 +45,6 @@ export class NewsPage implements OnInit {
 
   loadPagedArticles(pagedIds: { [p: number]: number[] }) {
     const currentPage = this.currentPage;
-
     const ids = pagedIds[currentPage];
     if (ids) {
       ids.forEach(id => {

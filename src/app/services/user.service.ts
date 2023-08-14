@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {AskApiResult} from "./ask.service";
@@ -27,7 +27,8 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private dateService: DateUtilityService
-  ) { }
+  ) {
+  }
 
   getUser(userId: string | null): Observable<ReadableUserApiResult> {
     return this.http.get<UserApiResult>(`${environment.apiUrl}/user/${userId}.json`).pipe(
@@ -37,6 +38,12 @@ export class UserService {
           readableDate: this.dateService.convertUnixToDate(user.created)
         };
       })
-    );  }
+    );
+  }
+
+  getUserStoryIds(userId: string | null): Observable<number[]> {
+    return this.http.get<any>(`${environment.apiUrl}/user/${userId}.json`)
+      .pipe(map(user => user.submitted));
+  }
 
 }

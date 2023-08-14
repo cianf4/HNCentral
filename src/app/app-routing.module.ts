@@ -34,7 +34,12 @@ const routes: Routes = [
   {
     path: 'user/:userId',
     loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
+  },
+  {
+    path: 'user/:userId/submissions',
+    loadChildren: () => import('./pages/submissions/submissions.module').then( m => m.SubmissionsPageModule)
   }
+
 
 
 
