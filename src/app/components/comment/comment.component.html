@@ -3,7 +3,7 @@
     <ion-label color="medium">
       <p>
         <ion-icon name="arrow-redo-outline"></ion-icon>
-        <ion-text class="by">{{ comment.by }}</ion-text>
+        <ion-text class="by" [routerLink]="['/user', comment.by]"> {{ comment.by }}</ion-text>
         • {{ comment.readableDate }}
       </p>
       <ion-text [innerHTML]="showFullText[comment.id] ? comment.text : (comment.text | slice:0:maxLength) + (comment.text.length > maxLength ? '...' : '')" color="dark"></ion-text>

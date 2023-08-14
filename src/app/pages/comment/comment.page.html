@@ -11,11 +11,17 @@
   <ion-card color="light">
     <ion-card-header>
       <ion-card-subtitle>
-        <ion-text color="medium">In risposta all'articolo di <ion-text class="by">{{ parent.by }}</ion-text> del {{ parent.readableDate }}</ion-text>
+        <ion-text color="medium">In risposta all'articolo di <ion-text class="by" [routerLink]="['/user', parent.by]">{{ parent.by }}</ion-text> del {{ parent.readableDate }}</ion-text>
       </ion-card-subtitle>
       <ion-card-title>
         <ion-text>{{ parent.title }}</ion-text>
       </ion-card-title>
+      <ion-card-content *ngIf="parent.text">
+        <ion-text [innerHTML]="showFullText[parent.id] ? parent.text : (parent.text | slice:0:maxLength) + (parent.text.length > maxLength ? '...' : '')" color="medium"></ion-text>
+        <ion-text button class="link" *ngIf="parent.text.length > maxLength" (click)="toggleText(parent.id)">
+          {{ showFullText[parent.id] ? 'Nascondi' : 'Mostra tutto' }}
+        </ion-text>
+      </ion-card-content>
       <ion-item lines="none" color="light">
         <ion-text slot="start" color="medium" class="commenti">
           <i><ion-icon name="chatbox-ellipses-outline"></ion-icon> {{ parent.descendants }} commenti</i>
@@ -30,7 +36,7 @@
   <ion-card color="light">
     <ion-card-header>
       <ion-label color="medium">
-        <p>Commento di <ion-text class="by">{{ comment.by }}</ion-text> • {{ comment.readableDate }}</p>
+        <p>Commento di <ion-text class="by" [routerLink]="['/user', comment.by]">{{ comment.by }}</ion-text> • {{ comment.readableDate }}</p>
       </ion-label>
       <ion-label *ngIf="comment.repliesCount > 0" color="medium">
         <ion-text class="risposte"><ion-icon name="arrow-redo-outline"></ion-icon> {{ comment.repliesCount }} risposte</ion-text>

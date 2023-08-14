@@ -14,3 +14,15 @@ ion-badge {
   border-radius: 2px;
   /* border: solid black 1px; */
 }
+
+ion-button {
+  --background: #0da3d4;
+}
+
+.custom-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 8px;
+}
+
