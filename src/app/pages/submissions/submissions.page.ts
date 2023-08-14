@@ -65,7 +65,7 @@ export class SubmissionsPage implements OnInit {
             console.log(response);
             this.storyIds.forEach(storyId => {
                 this.storyService.getArticle(storyId).subscribe((story) => {
-                    if ( story.type === 'story'){
+                    if ( story.type === 'story' && story.title ){
                         this.stories.push(story);
                         console.log(story);
                     }

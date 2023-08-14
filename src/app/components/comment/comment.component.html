@@ -4,11 +4,11 @@
       <p>
         <ion-icon name="arrow-redo-outline"></ion-icon>
         <ion-text class="by" [routerLink]="['/user', comment.by]"> {{ comment.by }}</ion-text>
-        • {{ comment.readableDate }}
+        • {{ comment.readableDate }} • <ion-text button class="open" [routerLink]="['/comment', comment.id]">Visualizza</ion-text>
       </p>
       <ion-text [innerHTML]="showFullText[comment.id] ? comment.text : (comment.text | slice:0:maxLength) + (comment.text.length > maxLength ? '...' : '')" color="dark"></ion-text>
       <ion-text button class="link" *ngIf="comment.text.length > maxLength" (click)="toggleText(comment.id)">
-        {{ showFullText[comment.id] ? 'Nascondi' : 'Mostra' }}
+        {{ showFullText[comment.id] ? 'Nascondi' : 'Mostra' }}<br>
       </ion-text>
       <ion-card *ngIf="comment.replies.length > 0" class="nested-comments">
         <app-comment [comments]="comment.replies"></app-comment>
