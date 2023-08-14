@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/news/news.module').then( m => m.NewsPageModule)
   },
   {
+    path: 'story/:storyId',
+    loadChildren: () => import('./pages/story/story.module').then( m => m.StoryPageModule)
+  },
+  {
     path: 'comment/:commentId',
     loadChildren: () => import('./pages/comment/comment.module').then( m => m.CommentPageModule)
   },
@@ -28,9 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/jobs/jobs.module').then( m => m.JobsPageModule)
   },
   {
-    path: 'story/:storyId',
-    loadChildren: () => import('./pages/story/story.module').then( m => m.StoryPageModule)
+    path: 'user/:userId',
+    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
   }
+
 
 
 

@@ -10,10 +10,9 @@
 <ion-content [fullscreen]="true">
   <ion-card *ngIf="story">
     <ion-card-header>
-      <ion-card-subtitle>Inviato da {{ story.by }} il {{ story.readableDate }}</ion-card-subtitle>
+      <ion-card-subtitle>Inviato da <ion-text class="link" [routerLink]="['/user', story.by]">{{ story.by }}</ion-text> il {{ story.readableDate }}</ion-card-subtitle>
       <ion-card-title>{{ story.title }}</ion-card-title>
     </ion-card-header>
-
     <ion-card-content>
       <ng-container *ngIf="story.text">
         <ion-text [innerHTML]="showFullText[story.id] ? story.text : (story.text | slice:0:maxLength) + (story.text.length > maxLength ? '...' : '')" color="dark"></ion-text>

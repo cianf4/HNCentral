@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Profilo di {{ user?.id }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/news"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngIf="user">
+    <ion-card-header>
+      <ion-card-title color="dark"><ion-icon name="person"></ion-icon> {{ user.id }}</ion-card-title>
+      <ion-card-subtitle>Registrato il {{ user.readableDate }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-text *ngIf="user.about" color="dark">{{ user.about }}</ion-text>
+      <ion-item lines="none">
+        <ion-badge slot="end">{{ user.karma }} karma</ion-badge>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

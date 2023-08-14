@@ -1,0 +1,16 @@
+ion-toolbar {
+  --background: #222952;
+  --color: white;
+}
+
+ion-badge {
+  --background: #ff9500;
+  --color: black;
+  font-size: 0.8em;
+  --padding-end: 12px;
+  --padding-start: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  border-radius: 2px;
+  /* border: solid black 1px; */
+}
