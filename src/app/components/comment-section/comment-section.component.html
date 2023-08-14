@@ -5,19 +5,21 @@
     </ion-card-title>
   </ion-card-header>
   <ion-list>
-    <ion-card button *ngFor="let comment of comments" color="light" [routerLink]="['/comment', comment.id]">
-      <ion-card-header>
-        <ion-label color="medium">
-          Scritto da<ion-text color="secondary" class="by"> {{ comment.by }} </ion-text> il {{ comment.readableDate }}
-        </ion-label>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-text class="comment-content" [innerHTML]="comment.text"></ion-text>
-        <ion-text class="replies" *ngIf="comment.repliesCount > 0">
-          <p><ion-icon name="arrow-redo-outline"></ion-icon> {{ comment.repliesCount }} risposte</p>
-        </ion-text>
-      </ion-card-content>
-    </ion-card>
+    <ng-container *ngFor="let comment of comments">
+      <ion-card button *ngIf="comment.text" color="light" [routerLink]="['/comment', comment.id]">
+        <ion-card-header>
+          <ion-label color="medium">
+            Scritto da<ion-text color="secondary" class="by"> {{ comment.by }} </ion-text> il {{ comment.readableDate }}
+          </ion-label>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text class="comment-content" [innerHTML]="comment.text"></ion-text>
+          <ion-text class="replies" *ngIf="comment.repliesCount > 0">
+            <p><ion-icon name="arrow-redo-outline"></ion-icon> {{ comment.repliesCount }} risposte</p>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
   </ion-list>
 </ion-card>
 

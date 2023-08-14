@@ -37,7 +37,6 @@
     </ion-card>
   </ng-container>
   <ng-template #commentBlock>
-
     <ion-card color="light">
       <ion-card-header>
         <ion-card-subtitle>
@@ -51,7 +50,7 @@
           </ion-text>
         <ion-item lines="none" color="light">
           <ion-text slot="start" color="medium" class="commenti">
-            <i><ion-icon name="chatbox-ellipses-outline"></ion-icon> {{ parent.decsendants }} risposte</i>
+            <i><ion-icon name="chatbox-ellipses-outline"></ion-icon> {{ parent.kids.length }} risposte</i>
           </ion-text>
           <ion-text button [routerLink]="['/comment', parent.id]" class="link" slot="end">
             <u><i><ion-icon name="newspaper-outline"></ion-icon> Vai al commento</i></u>
@@ -61,7 +60,7 @@
     </ion-card>
   </ng-template>
 
-  <ion-card color="light">
+  <ion-card color="light" *ngIf="comment.text">
     <ion-card-header>
       <ion-label color="medium">
         <p>Commento di <ion-text class="by" [routerLink]="['/user', comment.by]">{{ comment.by }}</ion-text> • {{ comment.readableDate }}</p>

@@ -40,7 +40,7 @@ export class NewsService {
       map((article: NewsApiResult) => {
         return {
           ...article,
-          readableDate: this.dateService.convertUnixToDate(article.time)
+          readableDate: this.dateService.convertUnixToDate(article.time),
         };
       })
     );
