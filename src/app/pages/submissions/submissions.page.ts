@@ -28,18 +28,66 @@ export class SubmissionsPage implements OnInit {
     this.loadSubmissions()
   }
 
+  /**Metodo con caricamento totale
+   async loadSubmissions() {
+       const loading = await this.loadingController.create({
+           spinner: 'circular',
+       });
+       await loading.present();
+       let pendingRequests = 0; // Contatore per richieste in sospeso
+       this.userService.getUserStoryIds(this.userId).subscribe(response => {
+           this.storyIds = response;
+           this.storyIds.forEach(storyId => {
+               pendingRequests++; // Incrementa il contatore per ogni richiesta
+               this.storyService.getArticle(storyId).subscribe((story) => {
+                   if (story.type === 'story') {
+                       this.stories.push(story);
+                       console.log(story)
+                   }
+                   pendingRequests--; // Decrementa il contatore quando una richiesta è stata completata
+                   if (pendingRequests === 0) {
+                       loading.dismiss(); // Chiudi il loadingController quando tutte le richieste sono state completate
+                   }
+               });
+           });
+       });
+   }**/
+
+
+     async loadSubmissions() {
+        const loading = await this.loadingController.create({
+            spinner: 'circular',
+        });
+        await loading.present();
+        this.userService.getUserStoryIds(this.userId).subscribe(response => {
+            loading.dismiss();
+            this.storyIds = response;
+            console.log(response);
+            this.storyIds.forEach(storyId => {
+                this.storyService.getArticle(storyId).subscribe((story) => {
+                    if ( story.type === 'story'){
+                        this.stories.push(story);
+                        console.log(story);
+                    }
+                });
+            });
+        });
+     }
+
+
+  /** Metodi per infinite scroll
   async loadSubmissions(event?: InfiniteScrollCustomEvent) {
     const loading = await this.loadingController.create({
       spinner: 'circular',
     });
     await loading.present();
-    this.storyService.getTopStories().subscribe(ids => {
+
+    this.userService.getUserStoryIds(this.userId).subscribe(ids => {
       loading.dismiss();
       let pagedIds = this.storyService.fromArrayToKeyValue(ids);
       this.loadPagedArticles(pagedIds);
       console.log(ids);
-      console.log(pagedIds)
-      //console.log(this.newsService.fromArrayToKeyValue(ids));
+      console.log(pagedIds);
       event?.target.complete();
       if (event) {
         event.target.disabled = this.totalPages === this.currentPage;
@@ -53,7 +101,7 @@ export class SubmissionsPage implements OnInit {
     if (ids) {
       ids.forEach(id => {
         this.storyService.getArticle(id).subscribe(story => {
-          if( story.type === "story" && story.title ){
+          if( story.type === "story" ){
             this.stories.push(story);
             console.log(story);
           }
@@ -66,50 +114,5 @@ export class SubmissionsPage implements OnInit {
     this.currentPage++;
     this.loadSubmissions(event);
   }
-
-
-  /**
-  async loadStories() {
-    const loading = await this.loadingController.create({
-      spinner: 'circular',
-    });
-    await loading.present();
-    this.userService.getUserStoryIds(this.userId).subscribe((ids) => {
-      loading.dismiss();
-      this.storyIds = ids;
-      const storyObservables = this.storyIds.map(id => this.storyService.getArticle(id));
-      for (const storyObservable of storyObservables) {
-        storyObservable.subscribe((story) => {
-          if (story.type === 'story'  && story.title) {
-            this.stories.push(story);
-          }
-
-        });
-      }
-    });
-  }
-  **/
-
-
-    /**
-     if (this.stories.length === storyObservables.length) {
-     loading.dismiss();
-     **/
-
-
-    /**
-     async loadUserStoryIds() {
-     const loading = await this.loadingController.create({
-     spinner: 'circular',
-     });
-     await loading.present();
-
-     this.userService.getUserStoryIds(this.userId).subscribe((ids) => {
-     loading.dismiss();
-     this.storyIds = ids;
-     console.log(ids);
-     });
-     }
-     **/
-
+      **/
 }
