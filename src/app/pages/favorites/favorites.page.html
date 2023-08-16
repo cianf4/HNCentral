@@ -13,9 +13,7 @@
 
 <ion-content [fullscreen]="true" id="main-content">
   <ion-list *ngIf="favorites">
-
     <ion-item button *ngFor="let favorite of favorites" [routerLink]="['/story', favorite.id]">
-
       <ion-label>
         <ion-text>{{ favorite.title }}</ion-text>
         <ion-text color="medium"><p>Da {{ favorite.by }} • {{ favorite.readableDate }}</p></ion-text>
@@ -26,7 +24,6 @@
       <ion-badge slot="end">
         <ion-icon name="star"></ion-icon>{{ favorite.score }}
       </ion-badge>
-
     </ion-item>
   </ion-list>
 </ion-content>

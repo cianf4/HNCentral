@@ -40,15 +40,11 @@ export class StoryPage implements OnInit {
     });
   }
 
-  addToFavorites() {
-    this.storageService.add(this.storyId);
-  }
-
   async updateFavoriteStatus() {
     this.isFavorite = await this.storageService.check(this.storyId);
   }
 
-  async toggleFavorite() {
+  async onFavoriteButtonClick() {
     if (this.isFavorite) {
       await this.storageService.remove(this.storyId);
       this.isFavorite = false;

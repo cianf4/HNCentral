@@ -7,7 +7,7 @@ ion-toolbar {
   font-size: 0.9em;
 }
 
-ion-badge {
+ion-badge.score {
   --background: #ff9500;
   --color: black;
   font-size: 0.8em;
@@ -19,6 +19,17 @@ ion-badge {
   /* border: solid black 1px; */
 }
 
+ion-button.fav {
+  --background: #c80000;
+  --color: white;
+  font-size: 0.85em;
+  --padding-end: 12px;
+  --padding-start: 12px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  /* border: solid black 1px; */
+}
+
 ion-button {
   --background: #0da3d4;
 }
@@ -27,4 +38,8 @@ ion-button {
   color: #0da3d4;
   text-decoration: underline;
   font-size: 1.1em;
+}
+
+ion-icon.share {
+  font-size: 2em;
 }

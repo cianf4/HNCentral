@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from "../../services/storage.service";
 import { NewsService, ReadableNewsApiResult } from "../../services/news.service";
-import { Observable } from "rxjs";
+import { LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-favorites',
@@ -13,6 +13,7 @@ export class FavoritesPage implements OnInit {
   favorites: any[] = [];
 
   constructor(
+      private loadingController: LoadingController,
       private storageService: StorageService,
       private newsService: NewsService
   ) { }
@@ -22,9 +23,14 @@ export class FavoritesPage implements OnInit {
     this.loadFavoriteArticles();
   }
 
-  loadFavoriteArticles() {
+  async loadFavoriteArticles() {
+    const loading = await this.loadingController.create({
+      spinner: 'circular',
+    });
+    await loading.present();
     for (const storyId of this.favoriteIds) {
       this.newsService.getArticle(storyId).subscribe(story => {
+        loading.dismiss();
         this.favorites.push(story);
       });
     }

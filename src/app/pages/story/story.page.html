@@ -11,7 +11,7 @@
   <ion-card *ngIf="story">
     <ion-card-header>
       <ion-card-subtitle>Inviato da <ion-text class="link" [routerLink]="['/user', story.by]">{{ story.by }}</ion-text> il {{ story.readableDate }}</ion-card-subtitle>
-      <ion-card-title>{{ story.title }}</ion-card-title>
+      <ion-card-title color="dark">{{ story.title }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ng-container *ngIf="story.text">
@@ -28,18 +28,25 @@
           Visualizza offerta
         </ng-template>
       </ion-button>
-      <ion-button (click)="toggleFavorite()" color="primary">
-        {{ isFavorite ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti' }}
-      </ion-button>
       <ion-item *ngIf="story.type !== 'job'" lines="none">
         <ion-text *ngIf="story.descendants" color="secondary" color="medium">
           <ion-icon name="chatbox-ellipses"></ion-icon> {{ story.descendants }} commenti
         </ion-text>
-        <ion-badge *ngIf="story.score > 1" slot="end">
+        <ion-badge *ngIf="story.score > 1" class="score" slot="end">
           <ion-icon name="star"></ion-icon> {{ story.score }} punti
         </ion-badge>
       </ion-item>
+      <ion-item lines="none">
+        <ion-button (click)="onFavoriteButtonClick()" class="fav" slot="start">
+          <ion-icon [name]="isFavorite ? 'heart-dislike' : 'heart'"></ion-icon>
+          {{ isFavorite ? ' RIMUOVI' : ' AGGIUNGI' }}
+        </ion-button>
+        <ion-icon name="logo-whatsapp" class="share" slot="end" color="dark"></ion-icon>
+        <ion-icon name="logo-facebook" class="share" slot="end" color="dark"></ion-icon>
+        <ion-icon name="logo-twitter" class="share" slot="end" color="dark"></ion-icon>
+        <ion-icon name="logo-linkedin" class="share" slot="end" color="dark"></ion-icon>
+      </ion-item>
     </ion-card-content>
   </ion-card>
-    <app-comment-section></app-comment-section>
+  <app-comment-section></app-comment-section>
 </ion-content>

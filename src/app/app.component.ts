@@ -27,6 +27,11 @@ export class AppComponent {
       title: 'Jobs',
       url: '/jobs',
       icon: 'bulb'
+    },
+    {
+      title: 'Preferiti',
+      url: '/favorites',
+      icon: 'heart'
     }
   ];
   constructor() {}
