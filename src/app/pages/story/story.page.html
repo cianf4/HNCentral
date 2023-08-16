@@ -28,6 +28,9 @@
           Visualizza offerta
         </ng-template>
       </ion-button>
+      <ion-button (click)="toggleFavorite()" color="primary">
+        {{ isFavorite ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti' }}
+      </ion-button>
       <ion-item *ngIf="story.type !== 'job'" lines="none">
         <ion-text *ngIf="story.descendants" color="secondary" color="medium">
           <ion-icon name="chatbox-ellipses"></ion-icon> {{ story.descendants }} commenti

@@ -61,6 +61,7 @@ export class NewsPage implements OnInit {
     this.loadTopStories(event);
   }
 
+
   /**
    loadArticles(ids: number[]) {
    // Loop through the article IDs and fetch each article

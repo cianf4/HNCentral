@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-toggle>
+        <ion-button>
+          <ion-icon name="menu"></ion-icon>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+    <ion-title>Preferiti</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" id="main-content">
+  <ion-list *ngIf="favorites">
+
+    <ion-item button *ngFor="let favorite of favorites" [routerLink]="['/story', favorite.id]">
+
+      <ion-label>
+        <ion-text>{{ favorite.title }}</ion-text>
+        <ion-text color="medium"><p>Da {{ favorite.by }} • {{ favorite.readableDate }}</p></ion-text>
+        <ion-text slot="end" *ngIf="favorite.descendants" class="comments">
+          <ion-icon name="chatbox-outline"></ion-icon> {{ favorite.descendants }} commenti
+        </ion-text>
+      </ion-label>
+      <ion-badge slot="end">
+        <ion-icon name="star"></ion-icon>{{ favorite.score }}
+      </ion-badge>
+
+    </ion-item>
+  </ion-list>
+</ion-content>

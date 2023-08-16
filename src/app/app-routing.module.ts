@@ -42,7 +42,11 @@ const routes: Routes = [
   {
     path: 'user/:userId/threads',
     loadChildren: () => import('./pages/threads/threads.module').then( m => m.ThreadsPageModule)
+  },  {
+    path: 'favorites',
+    loadChildren: () => import('./pages/favorites/favorites.module').then( m => m.FavoritesPageModule)
   }
+
 
 
 
