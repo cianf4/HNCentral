@@ -38,7 +38,12 @@ const routes: Routes = [
   {
     path: 'user/:userId/submissions',
     loadChildren: () => import('./pages/submissions/submissions.module').then( m => m.SubmissionsPageModule)
+  },
+  {
+    path: 'user/:userId/threads',
+    loadChildren: () => import('./pages/threads/threads.module').then( m => m.ThreadsPageModule)
   }
+
 
 
 

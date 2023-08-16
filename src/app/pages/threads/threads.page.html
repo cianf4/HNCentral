@@ -10,17 +10,14 @@
 <ion-content [fullscreen]="true">
 
   <ion-list>
-    <ion-item button *ngFor="let story of submissions" [routerLink]="['/story', story.id]">
+    <ion-item button *ngFor="let comment of threads" [routerLink]="['/comment', comment.id]">
       <ion-label>
-        <ion-text>{{ story.title }}</ion-text>
-        <ion-text color="medium"><p>Inviato il {{ story.readableDate }}</p></ion-text>
-        <ion-text slot="end" *ngIf="story.descendants" class="comments">
-          <ion-icon name="chatbox-outline"></ion-icon> {{ story.descendants }} commenti
+        <ion-text [innerHTML]="comment.text"></ion-text>
+        <ion-text color="medium"><p>Inviato il {{ comment.readableDate }}</p></ion-text>
+        <ion-text slot="end" *ngIf="comment.repliesCount" class="comments">
+          <ion-icon name="chatbox-outline"></ion-icon> {{ comment.repliesCount }} risposte {{ parents[comment.parent]?.by }}
         </ion-text>
       </ion-label>
-      <ion-badge slot="end">
-        <ion-icon name="star"></ion-icon>{{ story.score }}
-      </ion-badge>
     </ion-item>
   </ion-list>
 

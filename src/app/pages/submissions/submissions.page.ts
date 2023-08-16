@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {InfiniteScrollCustomEvent, LoadingController} from "@ionic/angular";
-import {UserService} from "../../services/user.service";
-import {NewsService} from "../../services/news.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { InfiniteScrollCustomEvent, LoadingController } from "@ionic/angular";
+import { UserService } from "../../services/user.service";
+import { NewsService } from "../../services/news.service";
 
 @Component({
     selector: 'app-submissions',
@@ -11,10 +11,11 @@ import {NewsService} from "../../services/news.service";
 })
 export class SubmissionsPage implements OnInit {
     userId: string | null = this.route.snapshot.paramMap.get('userId');
-    storyIds: number[] = [];
-    stories: any[] = [];
+    ids: number[] = [];
+    submissions: any[] = [];
     first: number = 0;
-    last: number = 20;  //20 stories caricate
+    last: number = 50;
+    increment: number = 50;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,12 +36,12 @@ export class SubmissionsPage implements OnInit {
       await loading.present();
       this.userService.getUserStoryIds(this.userId).subscribe(response => {
           loading.dismiss();
-          this.storyIds = response.slice(this.first, this.last);
-          console.log(this.storyIds);
-          this.storyIds.forEach(storyId => {
+          this.ids = response.slice(this.first, this.last);
+          console.log(this.ids);
+          this.ids.forEach(storyId => {
               this.storyService.getArticle(storyId).subscribe((story) => {
                   if ( story.type === 'story' && story.title ){
-                      this.stories.push(story);
+                      this.submissions.push(story);
                       console.log(story);
                   }
               });
@@ -50,8 +51,8 @@ export class SubmissionsPage implements OnInit {
   }
 
     loadMore(event: any) {
-        this.first = this.first + 20;
-        this.last = this.last + 20;
+        this.first = this.first + this.increment;
+        this.last = this.last + this.increment;
         this.loadSubmissions(event);
     }
 
