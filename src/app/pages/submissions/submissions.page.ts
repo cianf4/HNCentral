@@ -13,8 +13,8 @@ export class SubmissionsPage implements OnInit {
     userId: string | null = this.route.snapshot.paramMap.get('userId');
     storyIds: number[] = [];
     stories: any[] = [];
-    currentPage = 1;
-    totalPages = 25;  //20 articoli per pagina
+    first: number = 0;
+    last: number = 20;  //20 stories caricate
 
   constructor(
     private route: ActivatedRoute,
@@ -28,51 +28,57 @@ export class SubmissionsPage implements OnInit {
     this.loadSubmissions()
   }
 
-  /**Metodo con caricamento totale
-   async loadSubmissions() {
-       const loading = await this.loadingController.create({
-           spinner: 'circular',
-       });
-       await loading.present();
-       let pendingRequests = 0; // Contatore per richieste in sospeso
-       this.userService.getUserStoryIds(this.userId).subscribe(response => {
-           this.storyIds = response;
-           this.storyIds.forEach(storyId => {
-               pendingRequests++; // Incrementa il contatore per ogni richiesta
-               this.storyService.getArticle(storyId).subscribe((story) => {
-                   if (story.type === 'story') {
-                       this.stories.push(story);
-                       console.log(story)
-                   }
-                   pendingRequests--; // Decrementa il contatore quando una richiesta è stata completata
-                   if (pendingRequests === 0) {
-                       loading.dismiss(); // Chiudi il loadingController quando tutte le richieste sono state completate
-                   }
-               });
-           });
-       });
-   }**/
+  async loadSubmissions(event?: InfiniteScrollCustomEvent) {
+      const loading = await this.loadingController.create({
+          spinner: 'circular',
+      });
+      await loading.present();
+      this.userService.getUserStoryIds(this.userId).subscribe(response => {
+          loading.dismiss();
+          this.storyIds = response.slice(this.first, this.last);
+          console.log(this.storyIds);
+          this.storyIds.forEach(storyId => {
+              this.storyService.getArticle(storyId).subscribe((story) => {
+                  if ( story.type === 'story' && story.title ){
+                      this.stories.push(story);
+                      console.log(story);
+                  }
+              });
+          });
+          event?.target.complete();
+      });
+  }
 
+    loadMore(event: any) {
+        this.first = this.first + 20;
+        this.last = this.last + 20;
+        this.loadSubmissions(event);
+    }
 
+    /**Metodo con caricamento totale
      async loadSubmissions() {
-        const loading = await this.loadingController.create({
-            spinner: 'circular',
-        });
-        await loading.present();
-        this.userService.getUserStoryIds(this.userId).subscribe(response => {
-            loading.dismiss();
-            this.storyIds = response;
-            console.log(response);
-            this.storyIds.forEach(storyId => {
-                this.storyService.getArticle(storyId).subscribe((story) => {
-                    if ( story.type === 'story' && story.title ){
-                        this.stories.push(story);
-                        console.log(story);
-                    }
-                });
-            });
-        });
+     const loading = await this.loadingController.create({
+     spinner: 'circular',
+     });
+     await loading.present();
+     let pendingRequests = 0; // Contatore per richieste in sospeso
+     this.userService.getUserStoryIds(this.userId).subscribe(response => {
+     this.storyIds = response;
+     this.storyIds.forEach(storyId => {
+     pendingRequests++; // Incrementa il contatore per ogni richiesta
+     this.storyService.getArticle(storyId).subscribe((story) => {
+     if (story.type === 'story') {
+     this.stories.push(story);
+     console.log(story)
      }
+     pendingRequests--; // Decrementa il contatore quando una richiesta è stata completata
+     if (pendingRequests === 0) {
+     loading.dismiss(); // Chiudi il loadingController quando tutte le richieste sono state completate
+     }
+     });
+     });
+     });
+     }**/
 
 
   /** Metodi per infinite scroll
