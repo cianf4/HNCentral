@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">HackerNewsClone</string>
-    <string name="title_activity_main">HackerNewsClone</string>
+    <string name="app_name">HN Central</string>
+    <string name="title_activity_main">HN Central</string>
     <string name="package_name">io.ionic.starter</string>
     <string name="custom_url_scheme">io.ionic.starter</string>
 </resources>

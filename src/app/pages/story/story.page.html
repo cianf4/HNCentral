@@ -41,10 +41,10 @@
           <ion-icon [name]="isFavorite ? 'heart-dislike' : 'heart'"></ion-icon>
           {{ isFavorite ? ' RIMUOVI' : ' AGGIUNGI' }}
         </ion-button>
-        <ion-icon name="logo-whatsapp" class="share" slot="end" color="dark"></ion-icon>
-        <ion-icon name="logo-facebook" class="share" slot="end" color="dark"></ion-icon>
-        <ion-icon name="logo-twitter" class="share" slot="end" color="dark"></ion-icon>
-        <ion-icon name="logo-linkedin" class="share" slot="end" color="dark"></ion-icon>
+        <ion-icon name="logo-whatsapp" class="share" slot="end" color="dark" (click)="shareOnWhatsApp()"></ion-icon>
+        <ion-icon name="logo-facebook" class="share" slot="end" color="dark" (click)="shareOnFacebook()"></ion-icon>
+        <ion-icon name="logo-linkedin" class="share" slot="end" color="dark" (click)="shareOnLinkedIn()"></ion-icon>
+        <ion-icon name="share-social" class="share" slot="end" color="dark" (click)="shareViaCapacitor()"></ion-icon>
       </ion-item>
     </ion-card-content>
   </ion-card>

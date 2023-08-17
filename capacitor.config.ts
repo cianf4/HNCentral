@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'HackerNewsClone',
+  appName: 'HN Central',
   webDir: 'www',
   server: {
     androidScheme: 'https'
