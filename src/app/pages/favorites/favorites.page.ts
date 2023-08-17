@@ -20,7 +20,9 @@ export class FavoritesPage implements OnInit {
 
   async ngOnInit() {
     this.favoriteIds = await this.storageService.get();
-    this.loadFavoriteArticles();
+    if (this.favoriteIds.length > 0) {
+      this.loadFavoriteArticles();
+    }
   }
 
   async loadFavoriteArticles() {
