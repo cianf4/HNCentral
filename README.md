@@ -6,10 +6,10 @@ Questo è un progetto realizzato con Ionic e Angular.
 
 Assicurati di avere installato Node.js e npm. Inoltre, avrai bisogno di Ionic e Angular CLI. Se non li hai già, puoi installarli con i seguenti comandi:
 
-\`\`\`bash
+```bash
 npm install -g @ionic/cli
 npm install -g @angular/cli
-\`\`\`
+```
 
 ## Installazione
 
